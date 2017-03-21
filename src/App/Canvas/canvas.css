@@ -1,0 +1,11 @@
+.foggy{
+    background: black;
+    padding: 1em;
+    
+    margin: 1em;
+}
+#dots-inBoxes{
+    background: gray;
+    display: block;
+    margin: auto;
+}
