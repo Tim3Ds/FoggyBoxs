@@ -15,20 +15,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
+        <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-           <nav class="navigation">
-            <a class="nav-toggle" href="#">
-              <span class="trigger">&#9776;</span>
-              <ul>
-                <li>Home</li>
-                <li>Contact Us</li>
-                <li>Prices</li>
-                <li>Cart</li>
-              </ul>
-            </a>
-          </nav>
-        </div>
+           
+        </header>
         <div className="App-body" >
           {this.props.children}
         </div>
