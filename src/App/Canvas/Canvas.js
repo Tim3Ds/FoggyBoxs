@@ -9,10 +9,12 @@ class Canvas extends React.Component{
     
     render(){
         return(
-            <div className='foggy'>
-                <canvas id="dots-inBoxes" width="400" height="300">
-                    browser support missing
-                </canvas>
+            <div className='frame'>
+                <div className='glass'>
+                    <canvas id="dots-inBoxes">
+                        browser support missing
+                    </canvas>
+                </div>
             </div>
         )
     }

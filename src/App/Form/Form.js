@@ -86,43 +86,33 @@ class Form extends React.Component{
         return(
             <div>
                 <div className='form'>
-                    <tr>
-                        <td>Name</td>
-                        <td>
-                            <input 
+                    <lu>
+                        <li><input 
                                 type="text" id="name"
                                 onChange={this.onChangeName.bind(this)}
                                 onKeyDown={this.onEnter}
                                 placeholder="Your Name"
                                 value={this.state.name}
                                 />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td>
-                            <input 
+                        </li>
+                   
+                        <li><input 
                                 type="text" id='email'
                                 onChange={this.onChangeEmail.bind(this)}
                                 onKeyDown={this.onEnter}
                                 placeholder="your@email.address"
                                 value={this.state.email}
                                 />
-                        </td>
-                        
-                    </tr>
-                    <tr>
-                        <td>Phone</td>
-                        <td>
-                            <input 
+                        </li>
+                        <li><input 
                                 type="text" id='phone'
                                 onChange={this.onChangePhone.bind(this)}
                                 onKeyDown={this.onEnter}
                                 placeholder="***-***-****"
                                 value={this.state.phone}
                                 />
-                        </td>
-                    </tr>
+                        </li>
+                    </lu>
                     <button onClick={this.onSubmit}>Submit</button>
                 </div>
                 <div id="Valid">

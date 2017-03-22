@@ -1,10 +1,11 @@
 .form{
     background: lightslategrey;
-    padding: 1pc;
-    max-width: 15pc;
+    padding: 1em;
+    padding-top: .5em;
+    padding-bottom: .75em;
+    max-width: 39em;
+    margin: auto;
     margin-top: 1em;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 10%;
 }
 input{
@@ -28,6 +29,10 @@ button{
 }
 .error{
     background: lightcoral;
-    border: .25em dashed darkred;
+    border: .2em dashed darkred;
 
+}
+li{
+    direction: none;
+    display: inline-block;
 }

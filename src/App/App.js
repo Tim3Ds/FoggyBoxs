@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './Form/Form'
-import Canvas from './Canvas/Canvas'
+import Form from './Form'
+import Canvas from './Canvas'
 
 class App extends Component {
   constructor(props){
