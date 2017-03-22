@@ -27,7 +27,6 @@ class App extends Component {
                 <li>Cart</li>
               </ul>
             </a>
-
           </nav>
         </div>
         <div className="App-body" >
