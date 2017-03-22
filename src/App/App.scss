@@ -1,0 +1,73 @@
+body{
+  background: #245;
+}
+.App{
+  max-width: 800px;
+  margin:0 auto;
+}
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 50px;
+}
+
+.App-header {
+  background:#eaeaea;
+
+  position:fixed;
+  width:100vw;
+
+  .constrain{
+    display:flex;
+    justify-content: space-between;
+  }
+
+  h1{
+    margin:0;
+  }
+
+  .nav-toggle{
+    text-decoration:none;
+    padding:0.5em;
+    display:inline-block;
+    position:relative;
+    background: #0a3;
+    color: #fff;
+    text-align:right;
+    line-height: 27px;
+
+    
+    transition: text-shadow 2s;
+    text-shadow: 0px 0px 10px rgba(255,255,255,0.6), 0px 0px 30px rgba(255,255,255,0.4), 0px 0px 50px rgba(255,255,255,0.3), 0px 0px 180px rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0);
+    @media screen and (min-width:450px){
+        display:block;
+        position:inherit;
+        background:none;
+        .trigger{
+          display:none;
+        }
+    }
+}
+.App-header:hover {
+  text-shadow: 0 0 1px rgba(255,255,255,.6);
+}
+.App-body {
+  font-size: large;
+}
+.App-footer{
+  background-color: #222;
+  height: 25px;
+  font-size: large;
+  color: white;
+  transition: text-shadow 2s;
+  text-shadow: 0px 0px 10px rgba(255,255,255,0.6), 0px 0px 30px rgba(255,255,255,0.4), 0px 0px 50px rgba(255,255,255,0.3), 0px 0px 180px rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0);
+}
+.App-footer:hover {
+  text-shadow: 0 0 1px rgba(255,255,255,.6);
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
