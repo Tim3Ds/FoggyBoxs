@@ -1,5 +1,6 @@
 import React from 'react';
 import './Form.css';
+import Picker from './ColorPicker'
 
 class Form extends React.Component{
     constructor(props){
@@ -11,21 +12,22 @@ class Form extends React.Component{
 
         //set default form state
         this.state = {
-            name: '',
-            email: '',
-            phone: '',
+            tag: '',
+            boxX: 1,
+            boxY: 1,
+            lineColor: '',
             valid: (id)=>{
                 let reg = '';
                 let elm = document.getElementById(id);
                 switch(id){
-                    case 'name':
-                        reg = /^[a-z ,.'-]+$/i;
+                    case 'tag':
+                        reg = /^[a-z][1-9]{2}$/;
                         break;
-                    case 'email':
-                        reg = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                    case 'boxs':
+                        reg = /^[1-9]{1,3}[X\s.]{1}[1-9]{1,3}$/
                         break;
-                    case 'phone':
-                        reg = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s.]{0,1}[0-9]{3}[-\s.]{0,1}[0-9]{4}$/
+                    case 'lineColor':
+                        reg = /^(#[a-f0-9]{3}([a-f0-9]{3})?)$/i
                         break;
                     default:
                         break;
@@ -44,22 +46,24 @@ class Form extends React.Component{
         };
     }
 
-    onChangeName(event){
-        this.state.valid('name');
+    onChangeTag(event){
+        this.state.valid('tag');
         this.setState({
-            name: event.target.value
+            tag: event.target.value
         })
     }
-    onChangeEmail(event){
-        this.state.valid('email');
+    onChangeBoxs(event){
+        this.state.valid('boxs');
+        var result = event.target.value.toUpperCase().split('X');
         this.setState({
-            email: event.target.value
+            boxX: result[0],
+            boxY: result[1]
         })
     }
-    onChangePhone(event){
-        this.state.valid('phone');
+    onChangeLineColor(event){
+        this.state.valid('lineColor');
         this.setState({
-            phone: event.target.value
+            lineColor: event.target.value
         })
     }
 
@@ -74,9 +78,10 @@ class Form extends React.Component{
         if(this.state.valid('name')&&this.state.valid('email')&&this.state.valid('phone')){
             this.props.getInfo(this.state);
             this.setState({
-                name:'',
-                email: '',
-                phone: ''
+                tag: '',
+                boxX: 1,
+                boxY: 1,
+                lineColor: '',
             });
             document.getElementById('Valid').innerHTML= `<p>Your input was Valid And loged to Console</p>`
         }
@@ -88,35 +93,35 @@ class Form extends React.Component{
                 <div className='form'>
                     <lu>
                         <li><input 
-                                type="text" id="name"
-                                onChange={this.onChangeName.bind(this)}
+                                type="text" id="tag"
+                                onChange={this.onChangeTag.bind(this)}
                                 onKeyDown={this.onEnter}
-                                placeholder="Your Name"
-                                value={this.state.name}
+                                placeholder="Name Tage"
+                                value={this.state.tag}
                                 />
                         </li>
                    
                         <li><input 
-                                type="text" id='email'
-                                onChange={this.onChangeEmail.bind(this)}
+                                type="text" id='boxs'
+                                onChange={this.onChangeBoxs.bind(this)}
                                 onKeyDown={this.onEnter}
-                                placeholder="your@email.address"
-                                value={this.state.email}
+                                placeholder="Box Size 1X1"
+                                value={this.state.boxX+'x'+this.state.boxY}
                                 />
                         </li>
-                        <li><input 
-                                type="text" id='phone'
-                                onChange={this.onChangePhone.bind(this)}
+                        <li><Picker 
+                                
+                                />
+                            <input 
+                                type="text" id='lineColor'
+                                onChange={this.onChangeLineColor.bind(this)}
                                 onKeyDown={this.onEnter}
-                                placeholder="***-***-****"
-                                value={this.state.phone}
+                                placeholder="line color hex code"
+                                value={this.state.lineColor}
                                 />
                         </li>
                     </lu>
                     <button onClick={this.onSubmit}>Submit</button>
-                </div>
-                <div id="Valid">
-
                 </div>
             </div>
         )
