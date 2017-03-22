@@ -16,15 +16,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-           
+          <img src={logo} className="App-logo" alt="logo" />   
         </header>
-        <div className="App-body" >
+        <section className="App-body" >
           {this.props.children}
-        </div>
-        <div className="App-footer">
+        </section>
+        <footer className="App-footer">
           <span className='Header'>Welcome to Foggy Boxes <span className='react'>a React App</span></span>
-        </div> 
+        </footer> 
       </div>
     );
   }

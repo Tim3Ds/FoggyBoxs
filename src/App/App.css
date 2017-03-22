@@ -62,7 +62,7 @@
 
 @media screen and (min-width: 450px) { 
   .App {
-    text-align: none;
+    text-align: left;
   }
   .App-header .nav-toggle { 
     display: block; 
