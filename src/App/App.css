@@ -14,18 +14,9 @@ body{
   background:#eaeaea;
 
   position:fixed;
-  width:100vw;
-
-  .constrain{
-    display:flex;
-    justify-content: space-between;
-  }
-
-  h1{
-    margin:0;
-  }
-
-  .nav-toggle{
+  width:100vw;  
+}
+.App-header .nav-toggle{
     text-decoration:none;
     padding:0.5em;
     display:inline-block;
@@ -34,20 +25,19 @@ body{
     color: #fff;
     text-align:right;
     line-height: 27px;
-
-    
     transition: text-shadow 2s;
     text-shadow: 0px 0px 10px rgba(255,255,255,0.6), 0px 0px 30px rgba(255,255,255,0.4), 0px 0px 50px rgba(255,255,255,0.3), 0px 0px 180px rgba(255,255,255,0.3);
     color: rgba(255,255,255,0);
-    @media screen and (min-width:450px){
-        display:block;
-        position:inherit;
-        background:none;
-        .trigger{
-          display:none;
-        }
+}
+@media screen and (min-width:450px){
+    display:block;
+    position:inherit;
+    background:none;
+    .trigger{
+      display:none;
     }
 }
+    
 .App-header:hover {
   text-shadow: 0 0 1px rgba(255,255,255,.6);
 }
