@@ -22,10 +22,12 @@
   font-size: large;
   position: absolute;
   
-  height: 80vh;
+  height: 60vh;
 
 }
 .App-footer { 
+  position: absolute;
+  
   background: #222; 
   color: #f9f9f9; 
   padding: 0 2em; 

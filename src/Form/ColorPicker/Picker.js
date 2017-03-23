@@ -1,7 +1,8 @@
 import React from 'react';
 import { SketchPicker } from 'react-color';
-import reactCSS from 'reactcss'
 
+import reactCSS from 'reactcss'
+// var { Alpha } = require('react-color/lib/components/common');
 class Picker extends React.Component {
     state = {
     displayColorPicker: false,
@@ -65,6 +66,7 @@ class Picker extends React.Component {
         { this.state.displayColorPicker ? <div style={ styles.popover }>
           <div style={ styles.cover } onClick={ this.handleClose }/>
           <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
+          
         </div> : null }
       </div>
     )

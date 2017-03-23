@@ -1,6 +1,6 @@
 import React from 'react';
 import './canvas.css';
-import {Layer, Rect, Stage} from 'react-konva';
+import {Layer, Rect, Circle, Stage, Group } from 'react-konva';
 import Konva from 'konva';
 
 class Canvas extends React.Component{
@@ -9,7 +9,7 @@ class Canvas extends React.Component{
 
         this.state = {
             color: 'green',
-            width: 300,
+            width: 500,
             height: 500,
             touch: {
                 x: 0,
@@ -17,6 +17,8 @@ class Canvas extends React.Component{
             }
         };
         this.handleClick = this.handleClick.bind(this);
+        
+        
     }
     handleClick() {
       this.setState({
@@ -25,14 +27,56 @@ class Canvas extends React.Component{
     }
     render(){
         return(
-            <div className='frame' ref="frame">
+            <div className='frame' id="frame" >
                 <Stage width={this.state.width} height={this.state.height}>
-                    <Layer>
+                    <Layer className="dots-inBoxes">
                         <Rect
                             x={10} y={10} width={50} height={50}
                             fill={this.state.color}
                             shadowBlur={10}
                             onClick={this.handleClick}
+                        />
+                        <Circle
+                            x={200} y={100} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
+                        <Circle
+                            x={300} y={100} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
+                        <Circle
+                            x={400} y={100} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
+                        <Circle
+                            x={200} y={100} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
+                        <Circle
+                            x={200} y={200} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
+                        <Circle
+                            x={200} y={300} radius={30}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
                         />
                     </Layer>
                 </Stage>
