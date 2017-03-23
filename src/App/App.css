@@ -17,35 +17,6 @@
   padding: 20px;
   color: white;
 }
-.App-header .nav-toggle { 
-  text-decoration: none; 
-  padding: 0.5em; 
-  display: inline-block; 
-  position: relative; 
-  background: #0a3; 
-  color: #fff; 
-  text-align: right; 
-  line-height: 27px; 
-}
- 
-.App-header .nav-toggle:hover ul { 
-  display: block; 
-} 
-.App-header ul { 
-  margin: 0; 
-  padding: 0; 
-  list-style: none; 
-  display: none; 
-  position: absolute; 
-  background: #00aa33; 
-  z-index: 10; right: 0; 
-  min-width: 50vw; 
-} 
-
-.App-header ul li { 
-  padding: 0.5em; 
-  text-align: left; 
-} 
 
 .App-body {
   font-size: large;
