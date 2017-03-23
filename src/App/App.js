@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from '../Form';
-import Canvas from '../Canvas';
 import { Link } from 'react-router';
 
 class App extends Component {

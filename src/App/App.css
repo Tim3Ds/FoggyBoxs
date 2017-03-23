@@ -17,18 +17,20 @@
   padding: 20px;
   color: white;
 }
+.trigger a{
+  text-decoration: none;
+  
+}
 
 .App-body {
   font-size: large;
   position: absolute;
-  
-  height: 60vh;
-
+  min-height: 100%;
+  margin-bottom: 50px
 }
-.App-footer { 
-  position: absolute;
-  
+.App-footer {
   background: #222; 
+  height: 50px;
   color: #f9f9f9; 
   padding: 0 2em; 
 }

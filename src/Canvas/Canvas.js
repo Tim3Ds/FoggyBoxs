@@ -1,6 +1,6 @@
 import React from 'react';
 import './canvas.css';
-import {Layer, Rect, Circle, Stage, Group } from 'react-konva';
+import {Layer, Rect, Circle, Stage } from 'react-konva';
 import Konva from 'konva';
 
 class Canvas extends React.Component{
