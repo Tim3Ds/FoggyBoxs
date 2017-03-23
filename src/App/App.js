@@ -15,12 +15,14 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <a class="nav-toggle" href="#">
-            <span class="trigger">&#9776;</span>
-            <Link to="/Game">Game</Link>
-            <Link to="/Setup">Setup</Link>
-          </a>
+          <Link to='/'><img src={logo} className="App-logo" alt="logo" /></Link>
+          <span className="nav-toggle" href="#">
+            <span className="trigger">&#9776;</span>
+            <lu>
+              <li><Link to="/Game">Game</Link></li>
+              <li><Link to="/Setup">Setup</Link></li>
+            </lu>
+          </span>
         </header>
         <section className="App-body" >
           {this.props.children}
