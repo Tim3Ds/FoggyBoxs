@@ -16,13 +16,16 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <Link to='/'><img src={logo} className="App-logo" alt="logo" /></Link>
-          <span className="nav-toggle" href="#">
-            <span className="trigger">&#9776;</span>
-            <lu>
-              <li><Link to="/Game">Game</Link></li>
-              <li><Link to="/Setup">Setup</Link></li>
-            </lu>
-          </span>
+          <nav className="navigation">
+            <a className="nav-toggle" href="#">
+              <span className="trigger">&#9776;</span>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/Game">Game</Link></li>
+                <li><Link to="/Setup">Setup</Link></li>
+              </ul>
+            </a>
+          </nav>
         </header>
         <section className="App-body" >
           {this.props.children}

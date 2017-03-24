@@ -91,7 +91,7 @@ class Form extends React.Component{
         return(
             <div>
                 <div className='form'>
-                    <lu>
+                    <ul>
                         <li><input 
                                 type="text" id="tag"
                                 onChange={this.onChangeTag.bind(this)}
@@ -120,7 +120,7 @@ class Form extends React.Component{
                                 value={this.state.lineColor}
                                 />
                         </li>
-                    </lu>
+                    </ul>
                     <button onClick={this.onSubmit}>Submit</button>
                 </div>
             </div>

@@ -20,7 +20,7 @@ input{
   box-sizing: border-box;
   color: snow;
 }
-button{
+.form button{
     background-color: green;
     border-radius: 2ex;
     font-size: 17pt;
@@ -30,9 +30,8 @@ button{
 .error{
     background: lightcoral;
     border: .2em dashed darkred;
+}
+.form li{
+    padding: 1em;
+}
 
-}
-li{
-    direction: none;
-    display: inline-block;
-}
