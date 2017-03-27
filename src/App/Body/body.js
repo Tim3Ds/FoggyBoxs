@@ -4,7 +4,7 @@ import './body.css';
 class Body extends React.Component{
     render(){
         return(
-            <div className="body">
+            <div className="home-constraint">
                 <a href='https://en.wikipedia.org/wiki/Dots_and_Boxes'>wiki link</a>
                 <h1>History</h1>
                 Dots and Boxes was originaly a pencil-and-paper game for two players 

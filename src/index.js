@@ -11,7 +11,7 @@ import { Router, Route, browserHistory  } from 'react-router'
 render((
   <Router history={browserHistory }>
     <Route path="/" component={App}>
-      <Route path="/" component={Body}/>
+      <Route path="/Home" component={Body}/>
       <Route path="/Game" component={Game}/>
       <Route path="/Setup" component={Form}/>
     </Route>
