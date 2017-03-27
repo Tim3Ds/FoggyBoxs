@@ -1,9 +1,44 @@
+::-webkit-scrollbar
+{
+  width: 12px;  /* for vertical scrollbars */
+  height: 12px; /* for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track
+{
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb
+{
+  background: rgba(0, 0, 0, 0.5);
+}
 .home-constraint{
     background-image: url('./Blue-Scratched-Glass-Texture.jpg');
-    ba-opacity: 90%;
+    opacity: .5;
     padding: 1em;
+    position: absolute;
+    width: 90%;
+    height: 100%;
     max-width: 600px;
-    margin: auto;
+    max-height: 80vh;
+    margin-left: 1em;
+    margin-right: 1em;
     margin-top: 1em;
     border-radius: 1em;
+    z-index: 1;
+}
+.content{
+    overflow-y:auto;
+    opacity: 1;
+    position: absolute;
+    max-width: 600px;
+    max-height: 80vh;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-top: 1em;
+    border-radius: 1em;
+    z-index: 5;
+    color: lawngreen;
+    font-size: 18pt;
 }
