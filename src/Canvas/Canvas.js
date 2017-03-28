@@ -1,16 +1,16 @@
 import React from 'react';
 import './canvas.css';
-import {Layer, Rect, Circle, Stage } from 'react-konva';
+import {Layer, Rect, Circle, Line, Stage, Canvas } from 'react-konva';
 import Konva from 'konva';
 
-class Canvas extends React.Component{
+class CanvasElm extends React.Component{
     constructor(props){
         super(props);
 
         this.state = {
             color: 'green',
-            width: 500,
-            height: 500,
+            width: innerWidth*.8,
+            height: innerHeight*.8,
             touch: {
                 x: 0,
                 y: 0
@@ -18,8 +18,10 @@ class Canvas extends React.Component{
         };
         this.handleClick = this.handleClick.bind(this);
         
-        
     }
+    
+
+
     handleClick() {
       this.setState({
         color: Konva.Util.getRandomColor()
@@ -58,7 +60,7 @@ class Canvas extends React.Component{
                             onMouseLeave={this.handleMouseLeave}
                         />
                         <Circle
-                            x={200} y={100} radius={30}
+                            x={300} y={200} radius={30}
                             fill='black'
                             strokeWidth={this.state.isMouseInside ? 5 : 1}
                             onMouseEnter={this.handleMouseEnter}
@@ -78,10 +80,17 @@ class Canvas extends React.Component{
                             onMouseEnter={this.handleMouseEnter}
                             onMouseLeave={this.handleMouseLeave}
                         />
+                        <Line 
+                            x={200} y={300} x={100} y={300}
+                            fill='black'
+                            strokeWidth={this.state.isMouseInside ? 5 : 1}
+                            onMouseEnter={this.handleMouseEnter}
+                            onMouseLeave={this.handleMouseLeave}
+                        />
                     </Layer>
                 </Stage>
             </div>
         )
     }
 }
-export default Canvas;
+export default CanvasElm;

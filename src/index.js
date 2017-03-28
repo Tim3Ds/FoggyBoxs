@@ -6,12 +6,12 @@ import Form from './Form'
 import Body from './App/Body'
 import './index.css';
 
-import { Router, Route, browserHistory  } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 render((
   <Router history={browserHistory }>
     <Route path="/" component={App}>
-      <Route path="/Home" component={Body}/>
+      <IndexRoute component={Body}/>
       <Route path="/Game" component={Game}/>
       <Route path="/Setup" component={Form}/>
     </Route>
