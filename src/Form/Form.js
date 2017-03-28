@@ -1,6 +1,7 @@
 import React from 'react';
 import './Form.css';
 import Picker from './ColorPicker'
+import TagEx from './TagEx.png'
 
 class Form extends React.Component{
     constructor(props){
@@ -92,7 +93,9 @@ class Form extends React.Component{
             <div>
                 <div className='form'>
                     <ul>
-                        <li><input 
+                        <li>
+                            <div id="tagImg"/>
+                            <input 
                                 type="text" id="tag"
                                 onChange={this.onChangeTag.bind(this)}
                                 onKeyDown={this.onEnter}
@@ -101,7 +104,9 @@ class Form extends React.Component{
                                 />
                         </li>
                    
-                        <li><input 
+                        <li>
+                            <div id="boxImg"/>
+                            <input 
                                 type="text" id='boxs'
                                 onChange={this.onChangeBoxs.bind(this)}
                                 onKeyDown={this.onEnter}
@@ -109,9 +114,9 @@ class Form extends React.Component{
                                 value={this.state.boxX+'x'+this.state.boxY}
                                 />
                         </li>
-                        <li><Picker 
-                                
-                                />
+                        <li>
+                            <div id="lineImg"/>
+                            <Picker />
                             <input 
                                 type="text" id='lineColor'
                                 onChange={this.onChangeLineColor.bind(this)}
