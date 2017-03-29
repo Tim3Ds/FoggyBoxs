@@ -10,7 +10,7 @@
     left: 1em;
     right: 1em;
     bottom: 2em;
-    max-width: 16em;
+    max-width: 17em;
     margin: auto;
     border-radius: 2em;
     overflow-y:auto;
@@ -76,6 +76,22 @@ input{
 }
 
 @media screen and (min-width: 800px) { 
+    
+    .form{
+        max-width: 670px;
+        max-height: 20em;
+    }
+    input{
+        display: inherit;
+        padding: 0;
+        margin: auto;
+        position: relative;
+        left: 1em;
+    }
+    .form button{
+        display: inherit;
+        margin: auto
+    }
     
     .form li{
         display: inline-block;
