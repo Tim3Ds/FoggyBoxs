@@ -75,3 +75,10 @@ input{
     left: -1em;
 }
 
+@media screen and (min-width: 800px) { 
+    
+    .form li{
+        display: inline-block;
+    }
+
+} 
