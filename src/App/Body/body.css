@@ -42,3 +42,56 @@
     color: lawngreen;
     font-size: 18pt;
 }
+
+.image{
+    display: none;
+}
+
+@media screen and (min-width: 1200px) { 
+  .image{
+      display: inherit;
+      float: right;
+      position: relative;
+      top: 20vh;
+      right: 2em;
+      border-radius: 1em;
+  }
+  .body-body {
+      position: absolute;
+      top: 0em;
+      left: 0em;
+      right: 0em;
+      bottom: 0em;
+      width: 1200px;
+      margin: auto;
+  }
+  .home-constraint{
+      background-image: url('./Blue-Scratched-Glass-Texture.jpg');
+      opacity: .5;
+      padding: 1em;
+      position: absolute;
+      top: 5em;
+      right: 1em;
+      left: 1em;
+      bottom: 2em;
+      max-width: 700px;
+      margin-left: 1em;
+      border-radius: 1em;
+      z-index: 1;
+  }
+  .content{
+      overflow-y:auto;
+      opacity: 1;
+      position: absolute;
+      top: 4em;
+      right: 1em;
+      left: 1em;
+      bottom: 2em;
+      max-width: 700px;
+      margin-left: 1em;
+      border-radius: 1em;
+      z-index: 5;
+      color: lawngreen;
+      font-size: 18pt;
+  }
+}

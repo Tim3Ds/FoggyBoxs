@@ -13,7 +13,7 @@
     max-width: 16em;
     margin: auto;
     border-radius: 2em;
-    scroll-behavior: auto;
+    overflow-y:auto;
     opacity: .8;
 }
 input{
