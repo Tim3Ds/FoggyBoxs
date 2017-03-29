@@ -1,10 +1,13 @@
 import React from 'react';
+import dotbox from './300px-Dots-and-boxes.png';
 import './body.css';
+
 
 class Body extends React.Component{
     render(){
         return(
             <div>
+                <img className="image" src={dotbox} className="image" alt="logo" />
                 <div className="home-constraint"></div>
                 <div className="content">
                     <h1>History</h1>
