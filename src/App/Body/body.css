@@ -52,7 +52,8 @@
       display: inherit;
       float: right;
       position: relative;
-      top: 20vh;
+      top: 50vh;
+      margin-top: -239px;
       right: 2em;
       border-radius: 1em;
   }
