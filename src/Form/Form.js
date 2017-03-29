@@ -1,7 +1,7 @@
 import React from 'react';
 import './Form.css';
 import Picker from './ColorPicker'
-import TagEx from './TagEx.png'
+import Canvas from './CanvasLineColor'
 
 class Form extends React.Component{
     constructor(props){
@@ -115,7 +115,7 @@ class Form extends React.Component{
                                 />
                         </li>
                         <li>
-                            <div id="lineImg"/>
+                            <Canvas className='Canv'/>
                             <Picker />
                             <input 
                                 type="text" id='lineColor'

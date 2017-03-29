@@ -1,6 +1,6 @@
 import React from 'react';
 import './canvas.css';
-import {Layer, Rect, Circle, Line, Stage, Canvas } from 'react-konva';
+import {Layer, Rect, Circle, Stage } from 'react-konva';
 import Konva from 'konva';
 
 class CanvasElm extends React.Component{
@@ -91,19 +91,19 @@ class CanvasElm extends React.Component{
                             onMouseLeave={this.handleMouseLeave}
                         />
                         <Rect
-                            x={290} y={100} width={20} height={100}
+                            x={390} y={200} width={20} height={100}
                             fill={this.state.color1}
                             shadowBlur={10}
                             onClick={this.handleClick}
                         />
                         <Rect
-                            x={190} y={100} width={20} height={100}
+                            x={390} y={100} width={20} height={100}
                             fill={this.state.color2}
                             shadowBlur={10}
                             onClick={this.handleClick}
                         />
                         <Rect
-                            x={200} y={190} width={100} height={20}
+                            x={200} y={290} width={100} height={20}
                             fill={this.state.color2}
                             shadowBlur={10}
                             onClick={this.handleClick}
