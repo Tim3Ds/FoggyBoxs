@@ -1,7 +1,9 @@
 .App {
   text-align: center;
+  height: 100vh;
+  background-image: url('./wooden-frame.jpg');
+  background-size: cover;
 }
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 60px;
@@ -12,91 +14,95 @@
 }
 
 .App-header {
-  background-color: black;
-  height: 50px;
-  padding: 20px;
-  color: white;
+  background-color: #333;
+  border-radius: -20%;
 }
-.App-header .nav-toggle { 
-  text-decoration: none; 
-  padding: 0.5em; 
-  display: inline-block; 
-  position: relative; 
-  background: #0a3; 
-  color: #fff; 
-  text-align: right; 
-  line-height: 27px; 
-}
- 
-.App-header .nav-toggle:hover ul { 
-  display: block; 
-} 
-.App-header ul { 
-  margin: 0; 
-  padding: 0; 
-  list-style: none; 
-  display: none; 
-  position: absolute; 
-  background: #00aa33; 
-  z-index: 10; right: 0; 
-  min-width: 50vw; 
-} 
 
-.App-header ul li { 
-  padding: 0.5em; 
-  text-align: left; 
-} 
-
-.App-body {
-  font-size: large;
+nav { 
   position: absolute;
-  
-  height: 80vh;
-
+  top: 1.3em;
+  right: 0em;
+  text-align: right;
+  z-index: 20;
+} 
+nav .trigger{
+  margin: 1em;
 }
-.App-footer { 
-  background: #222; 
-  color: #f9f9f9; 
-  padding: 0 2em; 
+nav a{
+  display: block;
+  color: lawngreen;
+}
+nav li a{
+  padding-left: 1em;
+  padding-right: 1em;
+}
+nav li:hover{
+  border: solid 3px #333;
+  background: #999;
+  transition: background 300ms;
+}
+nav li{
+  border: solid 3px #333;
+  background: #777;
+  transition: background 300ms;
+}
+nav ul{
+  display: none;
+  text-align: center;
+  padding: 0px;
+  border: solid 3px #333;
+}
+nav:hover ul{
+  display: block;
+}
+.App-footer {
+  background-color: black;
+  color: ghostwhite;
+  width: 100vw;
+  position: absolute;
+  bottom: 0px;
+  min-width: 300px;
 }
 
 @media screen and (min-width: 450px) { 
   .App {
     text-align: left;
   }
-  .App-header .nav-toggle { 
-    display: block; 
-    position: inherit; 
-    background: none; 
-  } 
-  .App-header .nav-toggle .trigger { 
-    display: none; 
-  } 
-  .App-header ul { 
-    display: block; 
-    position: inherit; 
-    background: none; 
-    z-index: 0; 
-    right: auto; 
-    min-width: none; 
-  } 
-  .App-header ul li { 
-    display: inline-block; 
-    color: #000; 
-  } 
+  nav { 
+    position: absolute;
+    right: 0;
+    top: -1em;
+    text-align: right;
+    z-index: 20;
+  }
+  nav .trigger{
+    display: none;
+  }
+  nav ul{
+    display: block;
+    text-align: center;
+    padding: 0px;
+    border: solid 3px #333;
+  }
+  nav a{
+    display: initial;
+    color: lawngreen;
+    padding-right: 1em;
+    padding-left: 1em;
+  }
+  nav li{
+    display: inline-block;
+  }
+  
+  
 }
 
-@media screen and (min-width: 550px) { 
-  .App-body .img-focas { 
-    width: 100%; 
-    margin: 0; 
-  } 
-}
 
-@media screen and (min-width: 800px) { 
+
+/*@media screen and (min-width: 800px) { 
   .App-body .img-focas { 
     width: 33%; 
     float: left; 
     margin: 0 2em 1em 0; 
   } 
-} 
+} */

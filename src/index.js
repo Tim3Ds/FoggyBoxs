@@ -1,16 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
-import Game from './App/Canvas'
-import Form from './App/Form'
+import Game from './Canvas'
+import Form from './Form'
+import Body from './App/Body'
 import './index.css';
 
-import { Router, Route, Link } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 render((
-  <Router App={Link}>
-    <Route path="/" component={App}/>
+  <Router history={browserHistory }>
+    <Route path="/" component={App}>
+      <IndexRoute component={Body}/>
       <Route path="/Game" component={Game}/>
       <Route path="/Setup" component={Form}/>
+    </Route>
   </Router>
 ),document.getElementById('root'));

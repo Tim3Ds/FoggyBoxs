@@ -1,0 +1,77 @@
+.form{
+    text-align: center;
+    background: url('./ice.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    top: 5em;
+    left: 1em;
+    right: 1em;
+    bottom: 2em;
+    max-width: 16em;
+    margin: auto;
+    border-radius: 2em;
+    scroll-behavior: auto;
+    opacity: .8;
+}
+input{
+  background: indigo;
+  border-radius: 20%;
+  border: .2em solid #e8e8e8;
+  max-width: 12em;
+  height: 3em;
+  box-sizing: border-box;
+  color: snow;
+}
+.form button{
+    background-color: green;
+    border-radius: 2ex;
+    font-size: 17pt;
+    padding: .5em;
+    margin: .7em;
+}
+.error{
+    background: lightcoral;
+    border: .2em dashed darkred;
+}
+.form li{
+    position: relative;
+    left: -1em;
+    padding: 1em;
+}
+#tagImg{
+    background: url('./TagEx.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: relative;
+    left:.7em;
+    width: 10em;
+    height: 9em;
+}
+#boxImg{
+    background: url('./TagEx.png');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: relative;
+    left:.7em;
+    width: 10em;
+    height: 9em;
+}
+#lineImg{
+    background: url('./LineCollorEx.png');
+    position: relative;
+    left:1.3em;
+    width: 9em;
+    height: 9em;
+}
+.Canv{
+    position: relative;
+    left: -1em;
+}
+

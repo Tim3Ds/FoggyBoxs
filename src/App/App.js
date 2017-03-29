@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Form from './Form'
-import Canvas from './Canvas'
+import { Link } from 'react-router';
 
 class App extends Component {
   constructor(props){
@@ -12,11 +11,22 @@ class App extends Component {
   logInfo = (info)=>{
     console.log(info);
   }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />   
+          <Link to='/'><img src={logo} className="App-logo" alt="logo" /></Link>
+          <nav className="navigation">
+            <a className="nav-toggle" href="#">
+              <span className="trigger">&#9776;</span>
+              <ul>
+                <li><Link to="/">Home</Link></li>
+                <li><Link to="/Game" activeStyle={{ background: 'white' }}>Game</Link></li>
+                <li><Link to="/Setup" activeStyle={{ background: 'white' }}>Setup</Link></li>
+              </ul>
+            </a>
+          </nav>
         </header>
         <section className="App-body" >
           {this.props.children}
