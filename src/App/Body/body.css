@@ -35,8 +35,10 @@
     right: 1em;
     left: 1em;
     bottom: 2em;
-    max-width: 700px;
+    max-width: 600px;
     margin: auto;
+    padding-right: 3em;
+    padding-left: 1em;
     border-radius: 1em;
     z-index: 5;
     color: lawngreen;
@@ -88,8 +90,10 @@
       right: 1em;
       left: 1em;
       bottom: 2em;
-      max-width: 700px;
+      max-width: 600px;
       margin-left: 1em;
+      padding-right: 3em;
+      padding-left: 1em;
       border-radius: 1em;
       z-index: 5;
       color: lawngreen;
