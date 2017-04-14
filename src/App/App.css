@@ -28,7 +28,7 @@ nav {
 nav .trigger{
   margin: 1em;
 }
-nav a{
+nav .nav-toggle{
   display: block;
   color: lawngreen;
 }
@@ -84,7 +84,7 @@ nav:hover ul{
     padding: 0px;
     border: solid 3px #333;
   }
-  nav a{
+  nav .nav-toggle{
     display: initial;
     color: lawngreen;
     padding-right: 1em;
