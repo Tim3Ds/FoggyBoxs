@@ -26,20 +26,23 @@ class CanvasElm extends React.Component{
             active5_8: false,
             active6_9: false,
             active7_8: false, active8_9: false,
-            node1: false, node2: false, node3: false,
-            node4: false, node5: false, node6: false,
-            node7: false, node8: false, node9: false,
             nodesWide: 3,
             nodesHeigh: 3,
             width: innerWidth*.8,
             height: innerHeight*.8,
             p1color: "red",
+            P1Tag: "TK", 
+            P2Tag: "CP",
+            Tag1_5: "",
+            Tag2_6: "",
+            Tag4_8: "",
+            Tag5_9: "",
             p2color: "green",
             turn: 1,
         };
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
-        this.activateNodes = this.activateNodes.bind(this);
+        this.nodesSquare = this.nodesSquare.bind(this);
     }
     
     getNewPlayerColor(id){
@@ -54,40 +57,64 @@ class CanvasElm extends React.Component{
         }
     }
 
-    activateNodes(pid, nodeA, nodeB){
-        let A = "node" + nodeA;
-        let B = "node" + nodeB;
-        this.setState({
-            [A]: true,
-            [B]: true
-        })
+    nodesSquare(pid, nodeA, nodeB){
+        
         // check for a new squar
-        if(nodeA === nodeB%this.state.nodesWide){
-            if(this.state["node" + (nodeA+1)]){
-                if(this.state["node" + (nodeB+1)]){
-                    let tagID = nodeA + '-' + (nodeB+1);
+        //check vertical 
+        if(nodeA === nodeB-this.state.nodesWide){
+            console.log(nodeA, '|', nodeB)
+            if(this.state["active" + (nodeA+1) + "_" + (nodeB+1)]){
+                console.log("active" + (nodeA+1) + "_" + (nodeB+1), this.state["active" + (nodeA+1) + "_" + (nodeB+1)])
+                if(this.state["active"+(nodeA)+"_"+(nodeA+1)]&&this.state["active"+(nodeB)+"_"+(nodeB+1)]){
+                    let tagID = "Tag" + (nodeA) + "_" + (nodeB+1);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    // document.getElementById(tagID).innerText = 'P1';
+                    this.setState({
+                        [tagID]: pid
+                    })
                 }
             }
-        }else if(nodeA+1 === nodeB){
-            if(this.state["node" + (nodeA+this.state.nodesWide)]){
-                if(this.state["node" + (nodeB+this.state.nodesWide)]){
-                    let tagID = nodeA + '-' + (nodeB+1);
+            if(this.state["active" + (nodeA-1) + "_" + (nodeB-1)]){
+                console.log("active" + (nodeA-1) + "_" + (nodeB-1), this.state["active" + (nodeA-1) + "_" + (nodeB-1)])
+                if(this.state["active"+(nodeA-1)+"_"+(nodeA)]&&this.state["active"+(nodeB-1)+"_"+(nodeB)]){
+                    let tagID = "Tag" + (nodeA-1) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    // document.getElementById(tagID).r = Konva.Text({
-                    //     text: pid
-                    // });
-                    
+                    this.setState({
+                        [tagID]: pid
+                    })
+                }
+            }
+        // check horisontal 
+        }
+        if(nodeA === nodeB-1){
+            console.log(nodeA, '_', (nodeB));
+            if(this.state["active" + (nodeA+this.state.nodesWide)+"_"+(nodeB+this.state.nodesWide)]){
+                console.log("active" + (nodeA+this.state.nodesWide)+"_"+(nodeB+this.state.nodesWide), this.state["active" + (nodeA+this.state.nodesWide)+"_"+(nodeB+this.state.nodesWide)])
+                if(this.state["active" + nodeA + "_" + (nodeA+this.state.nodesWide)]&&this.state["active" + nodeB + "_" + (nodeB+this.state.nodesWide)]){
+                    let tagID = "Tag" + nodeA + "_" + (nodeB+this.state.nodesWide);
+                    console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    this.setState({
+                        [tagID]: pid
+                    })
+                }
+            }
+            if(this.state["active" + (nodeA-this.state.nodesWide)+"_"+(nodeB-this.state.nodesWide)]){
+                console.log("active" + (nodeA-this.state.nodesWide)+"_"+(nodeB-this.state.nodesWide), this.state["active" + (nodeA-this.state.nodesWide)+"_"+(nodeB-this.state.nodesWide)])
+                if(this.state["active" + (nodeA-this.state.nodesWide) + "_" + (nodeA)]&&this.state["active" + (nodeB-this.state.nodesWide) + "_" + (nodeB)]){
+                    let tagID = "Tag" + (nodeA-this.state.nodesWide) + "_" + (nodeB);
+                    console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    this.setState({
+                        [tagID]: pid
+                    })
                 }
             }
         }
     }
+    
 
     handleClick(id, nodeA, nodeB) {
         let color = "color" + id;
         let activate = "active" + id;
-        console.log('color: ', color);
+        console.log(color, activate);
         if(!this.state[activate]){
             if(this.state.turn === 1){
                 this.setState({
@@ -95,14 +122,14 @@ class CanvasElm extends React.Component{
                     [activate]: true,
                     turn: 2,
                 });
-                this.activateNodes(1, nodeA, nodeB);
+                this.nodesSquare(this.state.P1Tag, nodeA, nodeB);
             }else{
                 this.setState({
                     [color]: this.state.p2color,
                     [activate]: true,
                     turn: 1,
                 });
-                this.activateNodes(2, nodeA, nodeB);
+                this.nodesSquare(this.state.P2Tag, nodeA, nodeB);
             }
         }
     }
@@ -119,7 +146,7 @@ class CanvasElm extends React.Component{
                         />
                         <Text 
                             x={50} y={25}
-                            text="P1"
+                            text={this.state.P1Tag}
                             id="P1Tag"
                             fontSize={20}
                         />
@@ -131,7 +158,7 @@ class CanvasElm extends React.Component{
                         />
                         <Text 
                             x={200} y={25}
-                            text="P2"
+                            text={this.state.P2Tag}
                             id="P2Tag"
                             fontSize={20}
                         />
@@ -142,8 +169,8 @@ class CanvasElm extends React.Component{
                             id='1'
                         />
                         <Text 
-                            x={125} y={125}
-                            text=""
+                            x={115} y={125}
+                            text={this.state.Tag1_5}
                             id="1-5"
                             fontSize={50}
                         />
@@ -154,9 +181,9 @@ class CanvasElm extends React.Component{
                             id='2'
                         />
                         <Text 
-                            x={225} y={125}
-                            text=""
-                            id="2-7"
+                            x={215} y={125}
+                            text={this.state.Tag2_6}
+                            id="2-6"
                             fontSize={50}
                         />
                         <Circle
@@ -172,8 +199,8 @@ class CanvasElm extends React.Component{
                             id='4'
                         />
                         <Text 
-                            x={225} y={125}
-                            text=""
+                            x={115} y={225}
+                            text={this.state.Tag4_8}
                             id="4-8"
                             fontSize={50}
                         />
@@ -184,8 +211,8 @@ class CanvasElm extends React.Component{
                             id='5'
                         />
                         <Text 
-                            x={225} y={125}
-                            text=""
+                            x={215} y={225}
+                            text={this.state.Tag5_9}
                             id="5-9"
                             fontSize={50}
                         />
