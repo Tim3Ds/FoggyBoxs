@@ -31,14 +31,15 @@ class CanvasElm extends React.Component{
             width: innerWidth*.8,
             height: innerHeight*.8,
             p1color: "red",
+            p2color: "green",
             P1Tag: "TK", 
             P2Tag: "CP",
             Tag1_5: "",
             Tag2_6: "",
             Tag4_8: "",
             Tag5_9: "",
-            p2color: "green",
             turn: 1,
+            claim: false,
         };
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
@@ -68,12 +69,9 @@ class CanvasElm extends React.Component{
                 if(this.state["active"+(nodeA)+"_"+(nodeA+1)]&&this.state["active"+(nodeB)+"_"+(nodeB+1)]){
                     let tagID = "Tag" + (nodeA) + "_" + (nodeB+1);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    if(this.state.turn == 1)
-                        this.state.turn = 2;
-                    else
-                        this.state.turn = 1;
                     this.setState({
-                        [tagID]: pid
+                        [tagID]: pid,
+                        claim: true
                     })
                 }
             }
@@ -82,12 +80,9 @@ class CanvasElm extends React.Component{
                 if(this.state["active"+(nodeA-1)+"_"+(nodeA)]&&this.state["active"+(nodeB-1)+"_"+(nodeB)]){
                     let tagID = "Tag" + (nodeA-1) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    if(this.state.turn == 1)
-                        this.state.turn = 2;
-                    else
-                        this.state.turn = 1;
                     this.setState({
-                        [tagID]: pid
+                        [tagID]: pid,
+                        claim: true
                     })
                 }
             }
@@ -100,12 +95,9 @@ class CanvasElm extends React.Component{
                 if(this.state["active" + nodeA + "_" + (nodeA+this.state.nodesWide)]&&this.state["active" + nodeB + "_" + (nodeB+this.state.nodesWide)]){
                     let tagID = "Tag" + nodeA + "_" + (nodeB+this.state.nodesWide);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    if(this.state.turn == 1)
-                        this.state.turn = 2;
-                    else
-                        this.state.turn = 1;
                     this.setState({
-                        [tagID]: pid
+                        [tagID]: pid,
+                        claim: true
                     })
                 }
             }
@@ -114,12 +106,9 @@ class CanvasElm extends React.Component{
                 if(this.state["active" + (nodeA-this.state.nodesWide) + "_" + (nodeA)]&&this.state["active" + (nodeB-this.state.nodesWide) + "_" + (nodeB)]){
                     let tagID = "Tag" + (nodeA-this.state.nodesWide) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
-                    if(this.state.turn == 1)
-                        this.state.turn = 2;
-                    else
-                        this.state.turn = 1;
                     this.setState({
-                        [tagID]: pid
+                        [tagID]: pid,
+                        claim: true
                     })
                 }
             }
@@ -133,17 +122,25 @@ class CanvasElm extends React.Component{
         console.log(color, activate);
         if(!this.state[activate]){
             if(this.state.turn === 1){
+                let player = 2;
+                if(this.state.claim)
+                    player = 1;
                 this.setState({
                     [color]: this.state.p1color,
                     [activate]: true,
-                    turn: 2,
+                    turn: player,
+                    claim: false
                 });
                 this.nodesSquare(this.state.P1Tag, nodeA, nodeB);
             }else{
+                let player = 1;
+                if(this.state.claim)
+                    player = 2;
                 this.setState({
                     [color]: this.state.p2color,
                     [activate]: true,
-                    turn: 1,
+                    turn: player,
+                    claim: false
                 });
                 this.nodesSquare(this.state.P2Tag, nodeA, nodeB);
             }
