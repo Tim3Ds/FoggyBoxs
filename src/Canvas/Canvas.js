@@ -68,6 +68,10 @@ class CanvasElm extends React.Component{
                 if(this.state["active"+(nodeA)+"_"+(nodeA+1)]&&this.state["active"+(nodeB)+"_"+(nodeB+1)]){
                     let tagID = "Tag" + (nodeA) + "_" + (nodeB+1);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    if(this.state.turn == 1)
+                        this.state.turn = 2;
+                    else
+                        this.state.turn = 1;
                     this.setState({
                         [tagID]: pid
                     })
@@ -78,6 +82,10 @@ class CanvasElm extends React.Component{
                 if(this.state["active"+(nodeA-1)+"_"+(nodeA)]&&this.state["active"+(nodeB-1)+"_"+(nodeB)]){
                     let tagID = "Tag" + (nodeA-1) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    if(this.state.turn == 1)
+                        this.state.turn = 2;
+                    else
+                        this.state.turn = 1;
                     this.setState({
                         [tagID]: pid
                     })
@@ -92,6 +100,10 @@ class CanvasElm extends React.Component{
                 if(this.state["active" + nodeA + "_" + (nodeA+this.state.nodesWide)]&&this.state["active" + nodeB + "_" + (nodeB+this.state.nodesWide)]){
                     let tagID = "Tag" + nodeA + "_" + (nodeB+this.state.nodesWide);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    if(this.state.turn == 1)
+                        this.state.turn = 2;
+                    else
+                        this.state.turn = 1;
                     this.setState({
                         [tagID]: pid
                     })
@@ -102,6 +114,10 @@ class CanvasElm extends React.Component{
                 if(this.state["active" + (nodeA-this.state.nodesWide) + "_" + (nodeA)]&&this.state["active" + (nodeB-this.state.nodesWide) + "_" + (nodeB)]){
                     let tagID = "Tag" + (nodeA-this.state.nodesWide) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
+                    if(this.state.turn == 1)
+                        this.state.turn = 2;
+                    else
+                        this.state.turn = 1;
                     this.setState({
                         [tagID]: pid
                     })
