@@ -32,11 +32,20 @@ class CanvasElm extends React.Component{
             active9: false,
             active10: false,
             active11: false,
+            node1: false,
+            node2: false,
+            node3: false,
+            node4: false,
+            node5: false,
+            node6: false,
+            node7: false,
+            node8: false,
+            node9: false,
             width: innerWidth*.8,
             height: innerHeight*.8,
             p1color: "red",
             p2color: "green",
-            turnP1: true,
+            turn: 1,
         };
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor= this.getNewPlayerColor.bind(this);
@@ -54,21 +63,21 @@ class CanvasElm extends React.Component{
         }
     }
 
-    handleClick(id) {
+    handleClick(id, nodeA, nodeB) {
         let color = "color" + id;
         let activate = "active" + id;
-        if(!activate){
-            if(this.state.turnP1){
+        if(!this.state[activate]){
+            if(this.state.turn === 1){
                 this.setState({
                     [color]: this.state.p1color,
                     [activate]: true,
-                    turnP1: false,
+                    turn: 2,
                 });
             }else{
                 this.setState({
                     [color]: this.state.p2color,
                     [activate]: true,
-                    turnP1: true,
+                    turn: 1,
                 });
             }
         }
