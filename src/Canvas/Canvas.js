@@ -39,7 +39,6 @@ class CanvasElm extends React.Component{
             Tag4_8: "",
             Tag5_9: "",
             turn: 1,
-            claim: false,
         };
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
@@ -71,7 +70,7 @@ class CanvasElm extends React.Component{
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
                         [tagID]: pid,
-                        claim: true
+                        turn: this.state.turn===1 ? 2 : 1,
                     })
                 }
             }
@@ -82,7 +81,7 @@ class CanvasElm extends React.Component{
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
                         [tagID]: pid,
-                        claim: true
+                        turn: this.state.turn===1 ? 2 : 1,
                     })
                 }
             }
@@ -97,7 +96,7 @@ class CanvasElm extends React.Component{
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
                         [tagID]: pid,
-                        claim: true
+                        turn: this.state.turn===1 ? 2 : 1,
                     })
                 }
             }
@@ -108,7 +107,7 @@ class CanvasElm extends React.Component{
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
                         [tagID]: pid,
-                        claim: true
+                        turn: this.state.turn===1 ? 2 : 1,
                     })
                 }
             }
@@ -122,27 +121,21 @@ class CanvasElm extends React.Component{
         console.log(color, activate);
         if(!this.state[activate]){
             if(this.state.turn === 1){
-                let player = 2;
-                if(this.state.claim)
-                    player = 1;
                 this.setState({
                     [color]: this.state.p1color,
                     [activate]: true,
-                    turn: player,
-                    claim: false
+                    turn: 2
                 });
                 this.nodesSquare(this.state.P1Tag, nodeA, nodeB);
+                console.log(this.state);
             }else{
-                let player = 1;
-                if(this.state.claim)
-                    player = 2;
                 this.setState({
                     [color]: this.state.p2color,
                     [activate]: true,
-                    turn: player,
-                    claim: false
+                    turn: 1
                 });
                 this.nodesSquare(this.state.P2Tag, nodeA, nodeB);
+                console.log(this.state);
             }
         }
     }
