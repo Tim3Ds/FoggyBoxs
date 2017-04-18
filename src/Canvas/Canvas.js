@@ -32,8 +32,8 @@ class CanvasElm extends React.Component{
             height: innerHeight*.8,
             p1color: "red",
             p2color: "green",
-            P1Tag: "TK", 
-            P2Tag: "CP",
+            P1Tag: ["TK",1], 
+            P2Tag: ["CP",2],
             Tag1_5: "",
             Tag2_6: "",
             Tag4_8: "",
@@ -56,7 +56,7 @@ class CanvasElm extends React.Component{
             })
         }
     }
-
+    
     nodesSquare(pid, nodeA, nodeB){
         
         // check for a new squar
@@ -69,9 +69,9 @@ class CanvasElm extends React.Component{
                     let tagID = "Tag" + (nodeA) + "_" + (nodeB+1);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
-                        [tagID]: pid,
-                        turn: this.state.turn===1 ? 2 : 1,
-                    })
+                        [tagID]: pid[0],
+                        turn: pid[1],
+                    });
                 }
             }
             if(this.state["active" + (nodeA-1) + "_" + (nodeB-1)]){
@@ -80,9 +80,9 @@ class CanvasElm extends React.Component{
                     let tagID = "Tag" + (nodeA-1) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
-                        [tagID]: pid,
-                        turn: this.state.turn===1 ? 2 : 1,
-                    })
+                        [tagID]: pid[0],
+                        turn: pid[1],
+                    });
                 }
             }
         // check horisontal 
@@ -95,9 +95,9 @@ class CanvasElm extends React.Component{
                     let tagID = "Tag" + nodeA + "_" + (nodeB+this.state.nodesWide);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
-                        [tagID]: pid,
-                        turn: this.state.turn===1 ? 2 : 1,
-                    })
+                        [tagID]: pid[0],
+                        turn: pid[1],
+                    });
                 }
             }
             if(this.state["active" + (nodeA-this.state.nodesWide)+"_"+(nodeB-this.state.nodesWide)]){
@@ -106,9 +106,9 @@ class CanvasElm extends React.Component{
                     let tagID = "Tag" + (nodeA-this.state.nodesWide) + "_" + (nodeB);
                     console.log("pid: ", pid, " nodeA: ", nodeA, " nodeB: ", nodeB, " tagID: ", tagID);
                     this.setState({
-                        [tagID]: pid,
-                        turn: this.state.turn===1 ? 2 : 1,
-                    })
+                        [tagID]: pid[0],
+                        turn: pid[1],
+                    });
                 }
             }
         }
@@ -152,7 +152,7 @@ class CanvasElm extends React.Component{
                         />
                         <Text 
                             x={50} y={25}
-                            text={this.state.P1Tag}
+                            text={this.state.P1Tag[0]}
                             id="P1Tag"
                             fontSize={20}
                         />
@@ -164,7 +164,7 @@ class CanvasElm extends React.Component{
                         />
                         <Text 
                             x={200} y={25}
-                            text={this.state.P2Tag}
+                            text={this.state.P2Tag[0]}
                             id="P2Tag"
                             fontSize={20}
                         />
