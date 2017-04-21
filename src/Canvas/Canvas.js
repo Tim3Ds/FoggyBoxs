@@ -1,5 +1,6 @@
 import React from 'react';
 import './canvas.css';
+import Popup from 'react-popup'
 import {Layer, Rect, Circle, Text, Stage } from 'react-konva';
 import Konva from 'konva';
 
@@ -43,8 +44,36 @@ class CanvasElm extends React.Component{
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
         this.nodesSquare = this.nodesSquare.bind(this);
+        this.changeTag = this.changeTag.bind(this);
+        this.updateTag = this.updateTag.bind(this);
+        
     }
     
+    changeTag(id, game){
+        let tempID = this.state['P'+id+'Tag'];
+        let selectedTag = tempID[0];
+        Popup.prompt('Change your Box Tag', '', {
+            placeholder: selectedTag,
+            type: 'text'
+        }, {
+            text: 'save',
+            className: 'success',
+            action: function (Box) {
+                game.updateTag(id, Box.value);
+                Box.close();
+            }
+        });
+        
+    };
+    updateTag(id, newTag){
+        console.log(id, this.state.P1Tag, this.state.P2Tag, newTag)
+        if(newTag !== ''){
+            newTag.toLocaleUpperCase().trim();
+            this.setState({
+                ['P'+id+'Tag']: [newTag,1]
+            });
+        }
+    }
     getNewPlayerColor(id){
         if(id === 1){
             this.setState({
@@ -59,7 +88,7 @@ class CanvasElm extends React.Component{
     
     nodesSquare(pid, nodeA, nodeB){
         
-        // check for a new squar
+        // check for a new square
         //check vertical 
         if(nodeA === nodeB-this.state.nodesWide){
             console.log(nodeA, '|', nodeB)
@@ -85,7 +114,7 @@ class CanvasElm extends React.Component{
                     });
                 }
             }
-        // check horisontal 
+        // check horizontal 
         }
         if(nodeA === nodeB-1){
             console.log(nodeA, '_', (nodeB));
@@ -142,12 +171,13 @@ class CanvasElm extends React.Component{
     render(){
         return(
             <div className='frame' id="frame" >
+                <Popup />
                 <Stage width={115*this.state.nodesWide} height={115*this.state.nodesHeigh+25}>
                     <Layer className="dots-inBoxes">
                         <Text 
                             x={115*this.state.nodesWide/2} y={115*this.state.nodesHeigh}
                             text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
-                            id="Turn taag"
+                            id="Turn-tag"
                             fontSize={20}
                         />
                         <Rect
@@ -161,6 +191,7 @@ class CanvasElm extends React.Component{
                             text={this.state.P1Tag[0]}
                             id="P1Tag"
                             fontSize={20}
+                            onClick={()=>{this.changeTag(1, this)}}
                         />
                         <Rect
                             x={230} y={10} width={100} height={50}
@@ -173,6 +204,7 @@ class CanvasElm extends React.Component{
                             text={this.state.P2Tag[0]}
                             id="P2Tag"
                             fontSize={20}
+                            onClick={()=>{this.changeTag(2, this)}}
                         />
                         <Circle
                             x={100} y={100} radius={30}

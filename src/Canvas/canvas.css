@@ -15,15 +15,50 @@
     z-index: 1;
 }
 
-Canvas{
+.konvajs-content{
     z-index: 5;
     border: 3px #060;
     border-radius: 1em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20vh;
 }
 .dots-inBoxes{
     background: cadetblue;
     opacity: 0.6;
     display: block;
     margin: auto;
+    
+}
+.mm-popup__close{
+    height: 1em;
+    width: 1em;
+}
+.mm-popup__box__footer__left-space{
+    display: flex;
+    float: left;
+    padding-top: 1em;
+}
+.mm-popup__box__footer__right-space{
+    display: flex;
+    float: right;
+    padding-top: 1em;
+}
+.mm-popup__box__footer__right-space button{
+    background: #060;
+}
+.mm-popup--visible{
+    background: tan;
+    opacity: .75;
+    position: absolute;
+    width: 200px;
+    z-index: 10;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 30vh;
+    padding: 1em;
+    text-align: center;
     
 }
