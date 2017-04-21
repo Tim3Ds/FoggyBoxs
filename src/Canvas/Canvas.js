@@ -29,12 +29,14 @@ class CanvasElm extends React.Component{
             active7_8: false, active8_9: false,
             nodesWide: 3,
             nodesHeigh: 3,
+            boxCount: 4,
+            boxActive: 0,
             width: innerWidth*.8,
             height: innerHeight*.8,
             p1color: "red",
             p2color: "green",
-            P1Tag: ["TK",1], 
-            P2Tag: ["CP",2],
+            P1Tag: ["TK",1,0], 
+            P2Tag: ["CP",2,0],
             Tag1_5: "",
             Tag2_6: "",
             Tag4_8: "",
@@ -46,6 +48,7 @@ class CanvasElm extends React.Component{
         this.nodesSquare = this.nodesSquare.bind(this);
         this.changeTag = this.changeTag.bind(this);
         this.updateTag = this.updateTag.bind(this);
+        this.endGame = this.endGame.bind(this);
         
     }
     
@@ -85,7 +88,22 @@ class CanvasElm extends React.Component{
             })
         }
     }
-    
+    endGame(){
+        if(this.state.boxCount === (this.state.P1Tag[2]+this.state.P2Tag[2])){
+            if(this.state.P1Tag[2]>this.state.P2Tag[2]){
+                Popup.alert('Player '+ this.state.P1Tag[0] +' Wins this Game')
+            } else if(this.state.P1Tag[2]<this.state.P2Tag[2]){
+                Popup.alert('Player '+ this.state.P2Tag[0] +' Wins this Game')
+            } else {
+                Popup.alert('Game was a Tie');
+            }
+            setTimeout(()=>{
+                window.location.href = '/Game';
+            }, 3000);
+            
+        }
+
+    }
     nodesSquare(pid, nodeA, nodeB){
         
         // check for a new square
@@ -100,7 +118,10 @@ class CanvasElm extends React.Component{
                     this.setState({
                         [tagID]: pid[0],
                         turn: pid[1],
+                        [pid]: [pid[0],pid[1],pid[2]++],
+                        boxActive: this.state.boxActive++,
                     });
+                    this.endGame(pid);
                 }
             }
             if(this.state["active" + (nodeA-1) + "_" + (nodeB-1)]){
@@ -111,7 +132,10 @@ class CanvasElm extends React.Component{
                     this.setState({
                         [tagID]: pid[0],
                         turn: pid[1],
+                        [pid]: [pid[0],pid[1],pid[2]++],
+                        boxActive: this.state.boxActive++,
                     });
+                    this.endGame(pid);
                 }
             }
         // check horizontal 
@@ -126,7 +150,11 @@ class CanvasElm extends React.Component{
                     this.setState({
                         [tagID]: pid[0],
                         turn: pid[1],
+                        [pid]: [pid[0],pid[1],pid[2]++],
+                        boxActive: this.state.boxActive++,
                     });
+                    this.endGame(pid);
+                    
                 }
             }
             if(this.state["active" + (nodeA-this.state.nodesWide)+"_"+(nodeB-this.state.nodesWide)]){
@@ -137,7 +165,10 @@ class CanvasElm extends React.Component{
                     this.setState({
                         [tagID]: pid[0],
                         turn: pid[1],
+                        [pid]: [pid[0],pid[1],pid[2]++],
+                        boxActive: this.state.boxActive++,
                     });
+                    this.endGame(pid);
                 }
             }
         }
