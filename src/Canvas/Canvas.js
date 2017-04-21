@@ -142,8 +142,14 @@ class CanvasElm extends React.Component{
     render(){
         return(
             <div className='frame' id="frame" >
-                <Stage width={115*this.state.nodesWide} height={115*this.state.nodesHeigh}>
+                <Stage width={115*this.state.nodesWide} height={115*this.state.nodesHeigh+25}>
                     <Layer className="dots-inBoxes">
+                        <Text 
+                            x={115*this.state.nodesWide/2} y={115*this.state.nodesHeigh}
+                            text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
+                            id="Turn taag"
+                            fontSize={20}
+                        />
                         <Rect
                             x={80} y={10} width={100} height={50}
                             fill={this.state.p1color}
