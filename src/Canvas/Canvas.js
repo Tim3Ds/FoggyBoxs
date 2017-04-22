@@ -3,7 +3,7 @@ import './canvas.css';
 import Popup from 'react-popup'
 import {Layer, Rect, Circle, Text, Stage } from 'react-konva';
 import Konva from 'konva';
-import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 const Dot = (x, y, game)=>{
     return(
@@ -140,12 +140,7 @@ class CanvasElm extends React.Component{
     updateWide(width){
         if(width !== ''){
             width.trim();
-            this.setState({
-                nodesWide: parseInt(width, (3,10))
-            });
-            setTimeout(()=>{
-                window.location.href = '/Game/'+width+'/'+this.state.nodesHeigh;
-            }, 1000);
+            window.location.href = '/Game/'+width+'/'+this.state.nodesHeigh;
         }
     };
     changeSizeHigh(game){
@@ -166,9 +161,7 @@ class CanvasElm extends React.Component{
     updateHigh(height){
         if(height !== ''){
             height.trim();
-            setTimeout(()=>{
-                window.location.href = '/Game/'+this.state.nodesWide+'/'+height;
-            }, 300);
+            window.location.href = '/Game/'+this.state.nodesWide+'/'+height;
         }
     };
     changeTag(id, game){
