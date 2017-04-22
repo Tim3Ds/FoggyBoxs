@@ -123,6 +123,55 @@ class CanvasElm extends React.Component{
             />
         )
     }
+    changeSizeWide(game){
+        let selectedTag = this.state.nodesWide;
+        Popup.prompt('Number of Boxes Wide', 'Changing this will Reload Game', {
+            placeholder: selectedTag,
+            type: 'text'
+        }, {
+            text: 'save',
+            className: 'success',
+            action: function (Box) {
+                game.updateWide(Box.value);
+                Box.close();
+            }
+        });
+        
+    };
+    updateWide(width){
+        if(width !== ''){
+            width.trim();
+            this.setState({
+                nodesWide: parseInt(width, (3,10))
+            });
+            setTimeout(()=>{
+                window.location.href = '/Game/:'+width+'/:'+this.state.nodesHeigh;
+            }, 1000);
+        }
+    };
+    changeSizeHigh(game){
+        let selectedTag = this.state.nodesHeigh;
+        Popup.prompt('Number of Boxes High', 'Changing this will Reload Game', {
+            placeholder: selectedTag,
+            type: 'text'
+        }, {
+            text: 'save',
+            className: 'success',
+            action: function (Box) {
+                game.updateHigh(Box.value);
+                Box.close();
+            }
+        });
+        
+    };
+    updateHigh(height){
+        if(height !== ''){
+            height.trim();
+            setTimeout(()=>{
+                window.location.href = '/Game/:'+this.state.nodesWide+'/:'+height;
+            }, 300);
+        }
+    };
     changeTag(id, game){
         let tempID = this.state['P'+id+'Tag'];
         let selectedTag = tempID[0];
@@ -277,13 +326,29 @@ class CanvasElm extends React.Component{
         return(
             <div className='frame' id="frame" >
                 <Popup />
-                <Stage width={115*this.state.nodesWide} height={115*this.state.nodesHeigh+25}>
+                <Stage width={115*this.state.nodesWide+50} height={115*this.state.nodesHeigh+25}>
                     <Layer className="dots-inBoxes">
                         <Text 
-                            x={105*this.state.nodesWide/2} y={115*this.state.nodesHeigh}
+                            x={105*this.state.nodesWide*.33} y={115*this.state.nodesHeigh}
                             text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
-                            id="Turn-tag"
                             fontSize={20}
+                        />
+                        <Text 
+                            x={(105*this.state.nodesWide*.66)-15} y={115*this.state.nodesHeigh}
+                            text={this.state.nodesWide}
+                            fontSize={20}
+                            onClick={()=>{this.changeSizeWide(this)}}
+                        />
+                        <Text 
+                            x={105*this.state.nodesWide*.66} y={115*this.state.nodesHeigh}
+                            text={'X'}
+                            fontSize={20}
+                        />
+                        <Text 
+                            x={(105*this.state.nodesWide*.66)+16} y={115*this.state.nodesHeigh}
+                            text={this.state.nodesHeigh}
+                            fontSize={20}
+                            onClick={()=>{this.changeTag(1, this)}}
                         />
                         <Rect
                             x={50*this.state.nodesWide/2} y={10} width={100} height={50}
