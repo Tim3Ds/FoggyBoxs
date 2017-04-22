@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Link } from 'react-router';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 class App extends Component {
   constructor(props){
@@ -39,4 +43,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const MainApp = () => (
+  <Router>
+    <Route component={App} />
+    
+  </Router>
+)
+
+
+export default MainApp;
