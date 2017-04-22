@@ -37,8 +37,8 @@ class CanvasElm extends React.Component{
             rcLen: 100,
             rcWide: 20,
             r: 30,
-            nodesWide: 7,
-            nodesHeigh: 7,
+            nodesWide: 4,
+            nodesHeigh: 4,
             boxCount: 0,
             boxActive: 0,
             width: innerWidth*.8,
@@ -64,8 +64,8 @@ class CanvasElm extends React.Component{
                 gameArray.push([this.hLine(x, y, this)])
             }
         }
-        for(let x=1;x<=this.state.nodesHeigh;x++){
-            for(let y=1;y<this.state.nodesWide;y++){
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<=this.state.nodesWide;x++){
                 gameArray.push([this.vLine(x, y, this)])
             }
         }
@@ -77,13 +77,13 @@ class CanvasElm extends React.Component{
         console.log(gameArray, this.state);
     }
     hLine(x, y, game){
-        let a = x,b = x+1
+        let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
         this.setState({
             ['color'+a+'_'+b]: '',
             ['active'+a+'_'+b]: false,
         });
         let fun = ()=>{return this.handleClick(a+'_'+b, a, b);};
-        let color = ()=>{return this.state['color'+a+'_'+b]};
+        let color = this.state['color'+a+'_'+b];
         return(
             <Rect
                 x={(x*100)} y={(y*100)-10} width={this.state.rcLen} height={this.state.rcWide}
@@ -94,13 +94,13 @@ class CanvasElm extends React.Component{
         );
     }
     vLine(x, y, game){
-        let a = x,b = x+this.state.nodesWide;
+        let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
         this.setState({
             ['color'+a+'_'+b]: '',
             ['active'+a+'_'+b]: false,
         })
         let fun = ()=>{return this.handleClick(a+'_'+b, a, b);};
-        let color = ()=>{this.state['color'+a+'_'+b]};
+        let color = this.state['color'+a+'_'+b];
         return(
             <Rect
                 x={(x*100)-10} y={(y*100)} width={this.state.rcWide} height={this.state.rcLen}
