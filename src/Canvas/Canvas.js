@@ -3,6 +3,7 @@ import './canvas.css';
 import Popup from 'react-popup'
 import {Layer, Rect, Circle, Text, Stage } from 'react-konva';
 import Konva from 'konva';
+import { BrowserRouter as Router, Route, withRouter } from 'react-router-dom'
 
 const Dot = (x, y, game)=>{
     return(
@@ -14,8 +15,6 @@ const Dot = (x, y, game)=>{
         />
     );
 }
-
-    
 
 const gameArray = []
 
@@ -36,9 +35,9 @@ class CanvasElm extends React.Component{
         this.state = {
             rcLen: 100,
             rcWide: 20,
-            r: 30,
-            nodesWide: 4,
-            nodesHeigh: 4,
+            r: 20,
+            nodesWide: parseInt(this.props.match.params.x),
+            nodesHeigh: parseInt(this.props.match.params.y),
             boxCount: 0,
             boxActive: 0,
             width: innerWidth*.8,
@@ -74,7 +73,7 @@ class CanvasElm extends React.Component{
                 gameArray.push([this.Tag(x, y, this)])
             }
         }
-        console.log(gameArray, this.state);
+        console.log(gameArray, this.state, this.props);
     }
     hLine(x, y, game){
         let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
@@ -145,7 +144,7 @@ class CanvasElm extends React.Component{
                 nodesWide: parseInt(width, (3,10))
             });
             setTimeout(()=>{
-                window.location.href = '/Game/:'+width+'/:'+this.state.nodesHeigh;
+                window.location.href = '/Game/'+width+'/'+this.state.nodesHeigh;
             }, 1000);
         }
     };
@@ -168,7 +167,7 @@ class CanvasElm extends React.Component{
         if(height !== ''){
             height.trim();
             setTimeout(()=>{
-                window.location.href = '/Game/:'+this.state.nodesWide+'/:'+height;
+                window.location.href = '/Game/'+this.state.nodesWide+'/'+height;
             }, 300);
         }
     };
@@ -348,7 +347,7 @@ class CanvasElm extends React.Component{
                             x={(105*this.state.nodesWide*.66)+16} y={115*this.state.nodesHeigh}
                             text={this.state.nodesHeigh}
                             fontSize={20}
-                            onClick={()=>{this.changeTag(1, this)}}
+                            onClick={()=>{this.changeSizeHigh(this)}}
                         />
                         <Rect
                             x={50*this.state.nodesWide/2} y={10} width={100} height={50}
@@ -383,4 +382,9 @@ class CanvasElm extends React.Component{
         )
     }
 }
-export default CanvasElm;
+const Game = () => (
+    <Router>
+        <Route path='/Game/:x/:y' component={CanvasElm}/>
+    </Router>
+)
+export default Game;
