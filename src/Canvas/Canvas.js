@@ -36,8 +36,8 @@ class CanvasElm extends React.Component{
             rcLen: 100,
             rcWide: 20,
             r: 20,
-            nodesWide: parseInt(this.props.match.params.x),
-            nodesHeigh: parseInt(this.props.match.params.y),
+            nodesWide: parseInt(this.props.match.params.x,(3,10)),
+            nodesHeigh: parseInt(this.props.match.params.y,(3,10)),
             boxCount: 0,
             boxActive: 0,
             width: innerWidth*.8,
@@ -99,11 +99,11 @@ class CanvasElm extends React.Component{
             ['active'+a+'_'+b]: false,
         })
         let fun = ()=>{return this.handleClick(a+'_'+b, a, b);};
-        let color = this.state['color'+a+'_'+b];
+        let color = 'color'+a+'_'+b;
         return(
             <Rect
                 x={(x*100)-10} y={(y*100)} width={this.state.rcWide} height={this.state.rcLen}
-                fill={color}
+                fill={this.state[color]}
                 shadowBlur={10}
                 onClick={fun}
             />
