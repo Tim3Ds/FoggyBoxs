@@ -31,7 +31,7 @@ class App extends Component {
                 <ul>
                   <li><Link to="/Home">Home</Link></li>
                   <li><Link to="/Game/4/4" activeStyle={{ background: 'white' }}>Game</Link></li>
-                  <li><Link to="/Setup" activeStyle={{ background: 'white' }}>Setup</Link></li>
+                  {/*<li><Link to="/Setup" activeStyle={{ background: 'white' }}>Setup</Link></li>*/}
                 </ul>
               </div>
             </nav>
