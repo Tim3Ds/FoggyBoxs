@@ -110,14 +110,15 @@ class CanvasElm extends React.Component{
         );
     }
     Tag(x, y, game){
+        let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
         this.setState({
             boxCount: this.state.boxCount++,
-            ['Tag'+x+'_'+(x+1+this.state.nodesWide)]: ''
+            ['Tag'+a+'_'+(b+1+this.state.nodesWide)]: ''
         })
         return(
             <Text 
                 x={(x*100)+15} y={(y*100)+25}
-                text={this.state['Tag'+x+'_'+(x+1+this.state.nodesWide)]}
+                text={this.state['Tag'+a+'_'+(b+1+this.state.nodesWide)]}
                 fontSize={50}
             />
         )
