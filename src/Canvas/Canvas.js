@@ -110,7 +110,7 @@ class CanvasElm extends React.Component{
                 linesArray.push([this.Tag(x, y, this)])
             }
         }
-        console.log('update', gameArray, this.state, this.props);
+        console.log('update', this.state);
     }
     
     hLine(x, y, game){
@@ -341,7 +341,6 @@ class CanvasElm extends React.Component{
     }
 
     handleHover(){
-        
         this.redrawElements();
     }
     
