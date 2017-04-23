@@ -26,10 +26,10 @@ class App extends Component {
           <header className="App-header">
             <Link to='/'><img src={logo} className="App-logo" alt="logo" /></Link>
             <nav className="navigation">
-              <div className="nav-toggle" href="#">
+              <div className="nav-toggle">
                 <span className="trigger">&#9776;</span>
                 <ul>
-                  <li><Link to="/Home">Home</Link></li>
+                  <li><Link to="/">Home</Link></li>
                   <li><Link to="/Game/4/4" activeStyle={{ background: 'white' }}>Game</Link></li>
                   {/*<li><Link to="/Setup" activeStyle={{ background: 'white' }}>Setup</Link></li>*/}
                 </ul>
@@ -37,7 +37,7 @@ class App extends Component {
             </nav>
           </header>
           <section className="App-body" >
-            <Route path='/Home' component={Home} />
+            <Route exact path='/' component={Home} />
             <Route path='/Game/:x/:y' component={Game} />
           </section>
           <footer className="App-footer">
