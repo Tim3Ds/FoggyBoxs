@@ -110,6 +110,8 @@ class CanvasElm extends React.Component{
                 linesArray.push([this.Tag(x, y, this)])
             }
         }
+        // dummy state change for force a reRender because 
+        // elemants are not a part of the render funtion 
         this.setState({
             ranColor: Konva.Util.getRandomColor(),
         })
