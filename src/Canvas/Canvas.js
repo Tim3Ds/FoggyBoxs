@@ -1,7 +1,7 @@
 import React from 'react';
 import './canvas.css';
 import Popup from 'react-popup'
-import {Layer, Rect, Circle, Text, Stage } from 'react-konva';
+import {Layer, Rect, Circle, Text, Stage, Group } from 'react-konva';
 import Konva from 'konva';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -11,18 +11,20 @@ const Dot = (x, y, game)=>{
             x={(x*100)} y={y*100} radius={game.state.r}
             fill='#333'
             shadowBlur='5'
-            id='1'
         />
     );
 }
 
 const gameArray = []
+let linesArray = []
+
 
 class CanvasElm extends React.Component{
     constructor(props){
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
+        this.handleHover = this.handleHover.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
         this.nodesSquare = this.nodesSquare.bind(this);
         this.changeTag = this.changeTag.bind(this);
@@ -31,6 +33,7 @@ class CanvasElm extends React.Component{
         this.hLine = this.hLine.bind(this);
         this.vLine = this.vLine.bind(this);
         this.Tag = this.Tag.bind(this);
+        this.redrawElements = this.redrawElements.bind(this);
 
         this.state = {
             rcLen: 100,
@@ -60,61 +63,82 @@ class CanvasElm extends React.Component{
         }
         for(let y=1;y<=this.state.nodesHeigh;y++){
             for(let x=1;x<this.state.nodesWide;x++){
-                gameArray.push([this.hLine(x, y, this)])
+                let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
+                this.setState({
+                    ['color'+a+'_'+b]: '',
+                    ['active'+a+'_'+b]: false,
+                });
+                linesArray.push([this.hLine(x, y, this)])
             }
         }
         for(let y=1;y<this.state.nodesHeigh;y++){
             for(let x=1;x<=this.state.nodesWide;x++){
-                gameArray.push([this.vLine(x, y, this)])
+                let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
+                this.setState({
+                    ['color'+a+'_'+b]: '',
+                    ['active'+a+'_'+b]: false,
+                })
+                linesArray.push([this.vLine(x, y, this)])
             }
         }
         for(let x=1;x<this.state.nodesHeigh;x++){
             for(let y=1;y<this.state.nodesWide;y++){
-                gameArray.push([this.Tag(x, y, this)])
+                let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
+                this.setState({
+                    boxCount: this.state.boxCount++,
+                    ['Tag'+a+'_'+(b+1+this.state.nodesWide)]: ''
+                })
+                linesArray.push([this.Tag(x, y, this)])
             }
         }
         console.log(gameArray, this.state, this.props);
     }
+    redrawElements() {
+        linesArray = [];
+        for(let y=1;y<=this.state.nodesHeigh;y++){
+            for(let x=1;x<this.state.nodesWide;x++){
+                linesArray.push([this.hLine(x, y, this)])
+            }
+        }
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<=this.state.nodesWide;x++){
+                linesArray.push([this.vLine(x, y, this)])
+            }
+        }
+        for(let x=1;x<this.state.nodesHeigh;x++){
+            for(let y=1;y<this.state.nodesWide;y++){
+                linesArray.push([this.Tag(x, y, this)])
+            }
+        }
+        console.log('update', gameArray, this.state, this.props);
+    }
+    
     hLine(x, y, game){
         let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
-        this.setState({
-            ['color'+a+'_'+b]: '',
-            ['active'+a+'_'+b]: false,
-        });
-        let fun = ()=>{return this.handleClick(a+'_'+b, a, b);};
-        let color = this.state['color'+a+'_'+b];
-        return(
+        return (
             <Rect
                 x={(x*100)} y={(y*100)-10} width={this.state.rcLen} height={this.state.rcWide}
-                fill={color}
+                fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
-                onClick={fun}
+                onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+                onMouseout={this.redrawElements}
             />
         );
     }
     vLine(x, y, game){
         let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
-        this.setState({
-            ['color'+a+'_'+b]: '',
-            ['active'+a+'_'+b]: false,
-        })
-        let fun = ()=>{return this.handleClick(a+'_'+b, a, b);};
-        let color = 'color'+a+'_'+b;
         return(
             <Rect
                 x={(x*100)-10} y={(y*100)} width={this.state.rcWide} height={this.state.rcLen}
-                fill={this.state[color]}
+                fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
-                onClick={fun}
+                onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+                onMouseout={this.redrawElements}
             />
         );
     }
     Tag(x, y, game){
         let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
-        this.setState({
-            boxCount: this.state.boxCount++,
-            ['Tag'+a+'_'+(b+1+this.state.nodesWide)]: ''
-        })
         return(
             <Text 
                 x={(x*100)+15} y={(y*100)+25}
@@ -315,12 +339,18 @@ class CanvasElm extends React.Component{
             }
         }
     }
+
+    handleHover(){
+        
+        this.redrawElements();
+    }
+    
     render(){
         return(
             <div className='frame' id="frame" >
                 <Popup />
                 <Stage width={115*this.state.nodesWide+50} height={115*this.state.nodesHeigh+25}>
-                    <Layer className="dots-inBoxes">
+                    <Layer ref='layer' className="dots-inBoxes">
                         <Text 
                             x={105*this.state.nodesWide*.33} y={115*this.state.nodesHeigh}
                             text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
@@ -369,7 +399,10 @@ class CanvasElm extends React.Component{
                             fontSize={20}
                             onClick={()=>{this.changeTag(2, this)}}
                         />
-                        {gameArray}
+                        <Group ref=''>
+                            {gameArray}
+                            {linesArray}
+                        </Group>
                     </Layer>
                 </Stage>
             </div>
