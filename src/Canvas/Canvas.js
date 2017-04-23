@@ -24,7 +24,6 @@ class CanvasElm extends React.Component{
         super(props);
 
         this.handleClick = this.handleClick.bind(this);
-        this.handleHover = this.handleHover.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
         this.nodesSquare = this.nodesSquare.bind(this);
         this.changeTag = this.changeTag.bind(this);
@@ -47,6 +46,7 @@ class CanvasElm extends React.Component{
             height: innerHeight*.8,
             p1color: "red",
             P1Tag: ["TK",1,0],
+            ranColor: '',
             p2color: "green",
             P2Tag: ["CP",2,0],
             turn: 1,
@@ -91,7 +91,7 @@ class CanvasElm extends React.Component{
                 linesArray.push([this.Tag(x, y, this)])
             }
         }
-        console.log(gameArray, this.state, this.props);
+        console.log(this.state, this.props);
     }
     redrawElements() {
         linesArray = [];
@@ -110,6 +110,9 @@ class CanvasElm extends React.Component{
                 linesArray.push([this.Tag(x, y, this)])
             }
         }
+        this.setState({
+            ranColor: Konva.Util.getRandomColor(),
+        })
         console.log('update', this.state);
     }
     
@@ -121,7 +124,6 @@ class CanvasElm extends React.Component{
                 fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
                 onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
-                onMouseout={this.redrawElements}
             />
         );
     }
@@ -133,7 +135,6 @@ class CanvasElm extends React.Component{
                 fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
                 onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
-                onMouseout={this.redrawElements}
             />
         );
     }
@@ -238,7 +239,7 @@ class CanvasElm extends React.Component{
                 Popup.alert('Game was a Tie');
             }
             setTimeout(()=>{
-                window.location.href = '/Game';
+                window.location.href = '/Game/' + parseInt(this.props.match.params.x,(3,10)) +'/'+ parseInt(this.props.match.params.y,(3,10));
             }, 3000);
             
         }
@@ -338,9 +339,6 @@ class CanvasElm extends React.Component{
                 console.log(this.state);
             }
         }
-    }
-
-    handleHover(){
         this.redrawElements();
     }
     
