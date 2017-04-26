@@ -21,7 +21,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename='/'>
         <div className="App">
           <header className="App-header">
             <Link to='/'><img src={logo} className="App-logo" alt="logo" /></Link>

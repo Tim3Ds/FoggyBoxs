@@ -232,7 +232,7 @@ class CanvasElm extends React.Component{
     };
 
     endGame(){
-        if(this.state.boxCount === (this.state.P1Tag[2]+this.state.P2Tag[2])){
+        if(this.state.boxCount+1 === (this.state.P1Tag[2]+this.state.P2Tag[2])){
             if(this.state.P1Tag[2]>this.state.P2Tag[2]){
                 Popup.alert('Player '+ this.state.P1Tag[0] +' Wins this Game')
             } else if(this.state.P1Tag[2]<this.state.P2Tag[2]){
@@ -240,9 +240,9 @@ class CanvasElm extends React.Component{
             } else {
                 Popup.alert('Game was a Tie');
             }
-            setTimeout(()=>{
-                window.location.href = '/Game/' + parseInt(this.props.match.params.x,(3,10)) +'/'+ parseInt(this.props.match.params.y,(3,10));
-            }, 3000);
+            // setTimeout(()=>{
+            //     window.location.href = '/Game/' + parseInt(this.props.match.params.x,(3,10)) +'/'+ parseInt(this.props.match.params.y,(3,10));
+            // }, 4000);
             
         }
 
@@ -409,8 +409,8 @@ class CanvasElm extends React.Component{
     }
 }
 const Game = () => (
-    <Router>
-        <Route path='/Game/:x/:y' component={CanvasElm}/>
+    <Router >
+        <Route basename='/Game' path='/Game/:x/:y' component={CanvasElm}/>
     </Router>
 )
 export default Game;
