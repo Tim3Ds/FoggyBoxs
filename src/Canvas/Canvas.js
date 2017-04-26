@@ -1,57 +1,197 @@
 import React from 'react';
 import './canvas.css';
 import Popup from 'react-popup'
-import {Layer, Rect, Circle, Text, Stage } from 'react-konva';
+import {Layer, Rect, Circle, Text, Stage, Group } from 'react-konva';
 import Konva from 'konva';
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+const Dot = (x, y, game)=>{
+    return(
+        <Circle
+            x={(x*100)} y={y*100} radius={game.state.r}
+            fill='#333'
+            shadowBlur='5'
+        />
+    );
+}
+
+const gameArray = []
+let linesArray = []
+
 
 class CanvasElm extends React.Component{
     constructor(props){
         super(props);
-        this.defaultColor = '';
-        this.state = {
-            color1_2: this.defaultColor, color2_3: this.defaultColor,
-            color1_4: this.defaultColor,
-            color2_5: this.defaultColor,
-            color3_6: this.defaultColor,
-            color4_5: this.defaultColor, color5_6: this.defaultColor,
-            color4_7: this.defaultColor,
-            color5_8: this.defaultColor,
-            color6_9: this.defaultColor,
-            color7_8: this.defaultColor, color8_9: this.defaultColor,
-            active1_2: false, active2_3: false,
-            active1_4: false,
-            active2_5: false,
-            active3_6: false,
-            active4_5: false, active5_6: false,
-            active4_7: false,
-            active5_8: false,
-            active6_9: false,
-            active7_8: false, active8_9: false,
-            nodesWide: 3,
-            nodesHeigh: 3,
-            boxCount: 4,
-            boxActive: 0,
-            width: innerWidth*.8,
-            height: innerHeight*.8,
-            p1color: "red",
-            p2color: "green",
-            P1Tag: ["TK",1,0], 
-            P2Tag: ["CP",2,0],
-            Tag1_5: "",
-            Tag2_6: "",
-            Tag4_8: "",
-            Tag5_9: "",
-            turn: 1,
-        };
+
         this.handleClick = this.handleClick.bind(this);
         this.getNewPlayerColor = this.getNewPlayerColor.bind(this);
         this.nodesSquare = this.nodesSquare.bind(this);
         this.changeTag = this.changeTag.bind(this);
         this.updateTag = this.updateTag.bind(this);
         this.endGame = this.endGame.bind(this);
+        this.hLine = this.hLine.bind(this);
+        this.vLine = this.vLine.bind(this);
+        this.Tag = this.Tag.bind(this);
+        this.redrawElements = this.redrawElements.bind(this);
+
+        this.state = {
+            rcLen: 100,
+            rcWide: 20,
+            r: 20,
+            nodesWide: parseInt(this.props.match.params.x,(3,10)),
+            nodesHeigh: parseInt(this.props.match.params.y,(3,10)),
+            boxCount: 0,
+            boxActive: 0,
+            width: innerWidth*.8,
+            height: innerHeight*.8,
+            p1color: "red",
+            P1Tag: ["TK",1,0],
+            ranColor: '',
+            p2color: "green",
+            P2Tag: ["CP",2,0],
+            turn: 1,
+        };
         
+        
+        
+    };
+    componentDidMount() {
+        for(let y=1;y<=this.state.nodesHeigh;y++){
+            for(let x=1;x<=this.state.nodesWide;x++){
+                gameArray.push([Dot(x, y, this)])
+            }
+        }
+        for(let y=1;y<=this.state.nodesHeigh;y++){
+            for(let x=1;x<this.state.nodesWide;x++){
+                let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
+                this.setState({
+                    ['color'+a+'_'+b]: '',
+                    ['active'+a+'_'+b]: false,
+                });
+                linesArray.push([this.hLine(x, y, this)])
+            }
+        }
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<=this.state.nodesWide;x++){
+                let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
+                this.setState({
+                    ['color'+a+'_'+b]: '',
+                    ['active'+a+'_'+b]: false,
+                })
+                linesArray.push([this.vLine(x, y, this)])
+            }
+        }
+        for(let x=1;x<this.state.nodesHeigh;x++){
+            for(let y=1;y<this.state.nodesWide;y++){
+                let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
+                this.setState({
+                    boxCount: this.state.boxCount++,
+                    ['Tag'+a+'_'+(b+1+this.state.nodesWide)]: ''
+                })
+                linesArray.push([this.Tag(x, y, this)])
+            }
+        }
+        console.log(this.state, this.props);
+    }
+    redrawElements() {
+        linesArray = [];
+        for(let y=1;y<=this.state.nodesHeigh;y++){
+            for(let x=1;x<this.state.nodesWide;x++){
+                linesArray.push([this.hLine(x, y, this)])
+            }
+        }
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<=this.state.nodesWide;x++){
+                linesArray.push([this.vLine(x, y, this)])
+            }
+        }
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<this.state.nodesWide;x++){
+                linesArray.push([this.Tag(x, y, this)])
+            }
+        }
+        // dummy state change for force a reRender because 
+        // elemants are not a part of the render funtion 
+        this.setState({
+            ranColor: Konva.Util.getRandomColor(),
+        })
+        console.log('update', this.state);
     }
     
+    hLine(x, y, game){
+        let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
+        return (
+            <Rect
+                x={(x*100)} y={(y*100)-10} width={this.state.rcLen} height={this.state.rcWide}
+                fill={this.state['color'+a+'_'+b]}
+                shadowBlur={10}
+                onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+            />
+        );
+    }
+    vLine(x, y, game){
+        let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
+        return(
+            <Rect
+                x={(x*100)-10} y={(y*100)} width={this.state.rcWide} height={this.state.rcLen}
+                fill={this.state['color'+a+'_'+b]}
+                shadowBlur={10}
+                onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+            />
+        );
+    }
+    Tag(x, y, game){
+        let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
+        return(
+            <Text 
+                x={(x*100)+15} y={(y*100)+25}
+                text={this.state['Tag'+a+'_'+(b+1+this.state.nodesWide)]}
+                fontSize={50}
+            />
+        )
+    }
+    changeSizeWide(game){
+        let selectedTag = this.state.nodesWide;
+        Popup.prompt('Number of Boxes Wide', 'Changing this will Reload Game', {
+            placeholder: selectedTag,
+            type: 'text'
+        }, {
+            text: 'save',
+            className: 'success',
+            action: function (Box) {
+                game.updateWide(Box.value);
+                Box.close();
+            }
+        });
+        
+    };
+    updateWide(width){
+        if(width !== ''){
+            width.trim();
+            window.location.href = '/Game/'+width+'/'+this.state.nodesHeigh;
+        }
+    };
+    changeSizeHigh(game){
+        let selectedTag = this.state.nodesHeigh;
+        Popup.prompt('Number of Boxes High', 'Changing this will Reload Game', {
+            placeholder: selectedTag,
+            type: 'text'
+        }, {
+            text: 'save',
+            className: 'success',
+            action: function (Box) {
+                game.updateHigh(Box.value);
+                Box.close();
+            }
+        });
+        
+    };
+    updateHigh(height){
+        if(height !== ''){
+            height.trim();
+            window.location.href = '/Game/'+this.state.nodesWide+'/'+height;
+        }
+    };
     changeTag(id, game){
         let tempID = this.state['P'+id+'Tag'];
         let selectedTag = tempID[0];
@@ -68,6 +208,7 @@ class CanvasElm extends React.Component{
         });
         
     };
+
     updateTag(id, newTag){
         console.log(id, this.state.P1Tag, this.state.P2Tag, newTag)
         if(newTag !== ''){
@@ -76,7 +217,8 @@ class CanvasElm extends React.Component{
                 ['P'+id+'Tag']: [newTag,1]
             });
         }
-    }
+    };
+
     getNewPlayerColor(id){
         if(id === 1){
             this.setState({
@@ -87,9 +229,10 @@ class CanvasElm extends React.Component{
                 p2color: Konva.Util.getRandomColor()
             })
         }
-    }
+    };
+
     endGame(){
-        if(this.state.boxCount === (this.state.P1Tag[2]+this.state.P2Tag[2])){
+        if(this.state.boxCount+1 === (this.state.P1Tag[2]+this.state.P2Tag[2])){
             if(this.state.P1Tag[2]>this.state.P2Tag[2]){
                 Popup.alert('Player '+ this.state.P1Tag[0] +' Wins this Game')
             } else if(this.state.P1Tag[2]<this.state.P2Tag[2]){
@@ -97,9 +240,9 @@ class CanvasElm extends React.Component{
             } else {
                 Popup.alert('Game was a Tie');
             }
-            setTimeout(()=>{
-                window.location.href = '/Game';
-            }, 3000);
+            // setTimeout(()=>{
+            //     window.location.href = '/Game/' + parseInt(this.props.match.params.x,(3,10)) +'/'+ parseInt(this.props.match.params.y,(3,10));
+            // }, 4000);
             
         }
 
@@ -198,238 +341,76 @@ class CanvasElm extends React.Component{
                 console.log(this.state);
             }
         }
+        this.redrawElements();
     }
+    
     render(){
         return(
             <div className='frame' id="frame" >
                 <Popup />
-                <Stage width={115*this.state.nodesWide} height={115*this.state.nodesHeigh+25}>
-                    <Layer className="dots-inBoxes">
+                <Stage width={115*this.state.nodesWide+50} height={115*this.state.nodesHeigh+25}>
+                    <Layer ref='layer' className="dots-inBoxes">
                         <Text 
-                            x={115*this.state.nodesWide/2} y={115*this.state.nodesHeigh}
+                            x={105*this.state.nodesWide*.33} y={115*this.state.nodesHeigh}
                             text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
-                            id="Turn-tag"
                             fontSize={20}
                         />
+                        <Text 
+                            x={(105*this.state.nodesWide*.66)-15} y={115*this.state.nodesHeigh}
+                            text={this.state.nodesWide}
+                            fontSize={20}
+                            onClick={()=>{this.changeSizeWide(this)}}
+                        />
+                        <Text 
+                            x={105*this.state.nodesWide*.66} y={115*this.state.nodesHeigh}
+                            text={'X'}
+                            fontSize={20}
+                        />
+                        <Text 
+                            x={(105*this.state.nodesWide*.66)+16} y={115*this.state.nodesHeigh}
+                            text={this.state.nodesHeigh}
+                            fontSize={20}
+                            onClick={()=>{this.changeSizeHigh(this)}}
+                        />
                         <Rect
-                            x={80} y={10} width={100} height={50}
+                            x={50*this.state.nodesWide/2} y={10} width={100} height={50}
                             fill={this.state.p1color}
                             shadowBlur={10}
                             onClick={()=>{this.getNewPlayerColor(1)}}
                         />
                         <Text 
-                            x={50} y={25}
+                            x={36*this.state.nodesWide/2} y={25}
                             text={this.state.P1Tag[0]}
                             id="P1Tag"
                             fontSize={20}
                             onClick={()=>{this.changeTag(1, this)}}
                         />
                         <Rect
-                            x={230} y={10} width={100} height={50}
+                            x={160*this.state.nodesWide/2} y={10} width={100} height={50}
                             fill={this.state.p2color}
                             shadowBlur={10}
                             onClick={()=>{this.getNewPlayerColor(2)}}
                         />
                         <Text 
-                            x={200} y={25}
+                            x={146*this.state.nodesWide/2} y={25}
                             text={this.state.P2Tag[0]}
                             id="P2Tag"
                             fontSize={20}
                             onClick={()=>{this.changeTag(2, this)}}
                         />
-                        <Circle
-                            x={100} y={100} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='1'
-                        />
-                        <Text 
-                            x={115} y={125}
-                            text={this.state.Tag1_5}
-                            id="1-5"
-                            fontSize={50}
-                        />
-                        <Circle
-                            x={200} y={100} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='2'
-                        />
-                        <Text 
-                            x={215} y={125}
-                            text={this.state.Tag2_6}
-                            id="2-6"
-                            fontSize={50}
-                        />
-                        <Circle
-                            x={300} y={100} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='3'
-                        />
-                        <Circle
-                            x={100} y={200} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='4'
-                        />
-                        <Text 
-                            x={115} y={225}
-                            text={this.state.Tag4_8}
-                            id="4-8"
-                            fontSize={50}
-                        />
-                        <Circle
-                            x={200} y={200} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='5'
-                        />
-                        <Text 
-                            x={215} y={225}
-                            text={this.state.Tag5_9}
-                            id="5-9"
-                            fontSize={50}
-                        />
-                        <Circle
-                            x={300} y={200} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='6'
-                        />
-                        <Circle
-                            x={100} y={300} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='7'
-                        />
-                        <Circle
-                            x={200} y={300} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='8'
-                        />
-                        <Circle
-                            x={300} y={300} radius={30}
-                            fill='#333'
-                            shadowBlur='5'
-                            id='9'
-                        /> 
-                        <Rect
-                            x={100} y={90} width={100} height={20}
-                            fill={this.state.color1_2}
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("1_2", 1, 2);
-                            }}
-                        />
-                        <Rect
-                            x={200} y={90} width={100} height={20}
-                            fill={this.state.color2_3}
-                            id='7'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("2_3", 2, 3);
-                            }}
-                        />
-
-                        <Rect
-                            x={90} y={100} width={20} height={100}
-                            fill={this.state.color1_4}
-                            id='1_4'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick('1_4', 1, 4);
-                            }}
-                        />
-                        <Rect
-                            x={190} y={100} width={20} height={100}
-                            fill={this.state.color2_5}
-                            id='2_5'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("2_5", 2, 5);
-                            }}
-                        />
-                        <Rect
-                            x={290} y={100} width={20} height={100}
-                            fill={this.state.color3_6}
-                            id='3_6'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("3_6", 3, 6);
-                            }}
-                        />
-
-                        <Rect
-                            x={100} y={190} width={100} height={20}
-                            fill={this.state.color4_5}
-                            id='3'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("4_5", 4, 5);
-                            }}
-                        />
-                        <Rect
-                            x={200} y={190} width={100} height={20}
-                            fill={this.state.color5_6}
-                            id='9'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("5_6", 5, 6);
-                            }}
-                        />
-
-                        <Rect
-                            x={90} y={200} width={20} height={100}
-                            fill={this.state.color4_7}
-                            id='4_7'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("4_7", 4, 7);
-                            }}
-                        />
-                        <Rect
-                            x={190} y={200} width={20} height={100}
-                            fill={this.state.color5_8}
-                            id='5_8'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("5_8", 5, 8);
-                            }}
-                        />
-                        <Rect
-                            x={290} y={200} width={20} height={100}
-                            fill={this.state.color6_9}
-                            id='6_9'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("6_9", 6, 9);
-                            }}
-                        />
-                       
-                        <Rect
-                            x={100} y={290} width={100} height={20}
-                            fill={this.state.color7_8}
-                            id='5'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("7_8", 7, 8);
-                            }}
-                        />
-                        <Rect
-                            x={200} y={290} width={100} height={20}
-                            fill={this.state.color8_9}
-                            id='11'
-                            shadowBlur={10}
-                            onClick={()=>{
-                                this.handleClick("8_9", 8, 9);
-                            }}
-                        />
+                        <Group ref=''>
+                            {gameArray}
+                            {linesArray}
+                        </Group>
                     </Layer>
                 </Stage>
             </div>
         )
     }
 }
-export default CanvasElm;
+const Game = () => (
+    <Router >
+        <Route basename='/Game' path='/Game/:x/:y' component={CanvasElm}/>
+    </Router>
+)
+export default Game;

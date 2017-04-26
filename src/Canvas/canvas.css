@@ -21,7 +21,6 @@
     border-radius: 1em;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 20vh;
 }
 .dots-inBoxes{
     background: cadetblue;
@@ -46,19 +45,34 @@
 }
 .mm-popup__box__footer__right-space button{
     background: #060;
+    color: whitesmoke;
 }
 .mm-popup--visible{
     background: tan;
     opacity: .75;
     position: absolute;
-    width: 200px;
+    width: 300px;
     z-index: 10;
     margin-left: auto;
     margin-right: auto;
+    font-size: 30px;
     left: 0;
     right: 0;
-    top: 30vh;
+    top: 10vh;
     padding: 1em;
     text-align: center;
     
 }
+
+input{
+    position: relative;
+    background: indigo;
+    border-radius: 20%;
+    border: .2em solid #e8e8e8;
+    max-width: 5em;
+    height: 3em;
+    box-sizing: border-box;
+    color: snow;
+    text-align: center;
+}
+
