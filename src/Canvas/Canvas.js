@@ -105,8 +105,8 @@ class CanvasElm extends React.Component{
                 linesArray.push([this.vLine(x, y, this)])
             }
         }
-        for(let x=1;x<this.state.nodesHeigh;x++){
-            for(let y=1;y<this.state.nodesWide;y++){
+        for(let y=1;y<this.state.nodesHeigh;y++){
+            for(let x=1;x<this.state.nodesWide;x++){
                 linesArray.push([this.Tag(x, y, this)])
             }
         }
