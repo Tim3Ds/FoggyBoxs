@@ -30,7 +30,7 @@ class App extends Component {
                 <span className="trigger">&#9776;</span>
                 <ul>
                   <li><Link to="/">Home</Link></li>
-                  <li><Link to="/Game/4/4" activeStyle={{ background: 'white' }}>Game</Link></li>
+                  <li><Link to="/Game/4/4" >Game</Link></li>
                   {/*<li><Link to="/Setup" activeStyle={{ background: 'white' }}>Setup</Link></li>*/}
                 </ul>
               </div>

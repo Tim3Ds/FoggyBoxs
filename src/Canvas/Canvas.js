@@ -5,16 +5,6 @@ import {Layer, Rect, Circle, Text, Stage, Group } from 'react-konva';
 import Konva from 'konva';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-const Dot = (x, y, game)=>{
-    return(
-        <Circle
-            x={(x*100)} y={y*100} radius={game.state.r}
-            fill='#333'
-            shadowBlur='5'
-        />
-    );
-}
-
 const gameArray = []
 let linesArray = []
 
@@ -29,21 +19,22 @@ class CanvasElm extends React.Component{
         this.changeTag = this.changeTag.bind(this);
         this.updateTag = this.updateTag.bind(this);
         this.endGame = this.endGame.bind(this);
+        this.Dot = this.Dot.bind(this);
         this.hLine = this.hLine.bind(this);
         this.vLine = this.vLine.bind(this);
         this.Tag = this.Tag.bind(this);
         this.redrawElements = this.redrawElements.bind(this);
 
         this.state = {
-            rcLen: 100,
-            rcWide: 20,
-            r: 20,
+            rcLen: 10*innerWidth*.008,
+            rcWide: 4*innerWidth*.008,
+            r: 2*innerWidth*.008,
             nodesWide: parseInt(this.props.match.params.x,(3,10)),
             nodesHeigh: parseInt(this.props.match.params.y,(3,10)),
             boxCount: 0,
             boxActive: 0,
-            width: innerWidth*.8,
-            height: innerHeight*.8,
+            width: innerWidth*.9,
+            height: innerHeight*.9,
             p1color: "red",
             P1Tag: ["TK",1,0],
             ranColor: '',
@@ -56,9 +47,10 @@ class CanvasElm extends React.Component{
         
     };
     componentDidMount() {
+        
         for(let y=1;y<=this.state.nodesHeigh;y++){
             for(let x=1;x<=this.state.nodesWide;x++){
-                gameArray.push([Dot(x, y, this)])
+                gameArray.push([this.Dot(x, y)])
             }
         }
         for(let y=1;y<=this.state.nodesHeigh;y++){
@@ -68,7 +60,7 @@ class CanvasElm extends React.Component{
                     ['color'+a+'_'+b]: '',
                     ['active'+a+'_'+b]: false,
                 });
-                linesArray.push([this.hLine(x, y, this)])
+                linesArray.push([this.hLine(x, y)])
             }
         }
         for(let y=1;y<this.state.nodesHeigh;y++){
@@ -78,7 +70,7 @@ class CanvasElm extends React.Component{
                     ['color'+a+'_'+b]: '',
                     ['active'+a+'_'+b]: false,
                 })
-                linesArray.push([this.vLine(x, y, this)])
+                linesArray.push([this.vLine(x, y)])
             }
         }
         for(let x=1;x<this.state.nodesHeigh;x++){
@@ -88,26 +80,29 @@ class CanvasElm extends React.Component{
                     boxCount: this.state.boxCount++,
                     ['Tag'+a+'_'+(b+1+this.state.nodesWide)]: ''
                 })
-                linesArray.push([this.Tag(x, y, this)])
+                linesArray.push([this.Tag(x, y)])
             }
         }
         console.log(this.state, this.props);
+        this.setState({
+            ranColor: Konva.Util.getRandomColor(),
+        })
     }
     redrawElements() {
         linesArray = [];
         for(let y=1;y<=this.state.nodesHeigh;y++){
             for(let x=1;x<this.state.nodesWide;x++){
-                linesArray.push([this.hLine(x, y, this)])
+                linesArray.push([this.hLine(x, y)])
             }
         }
         for(let y=1;y<this.state.nodesHeigh;y++){
             for(let x=1;x<=this.state.nodesWide;x++){
-                linesArray.push([this.vLine(x, y, this)])
+                linesArray.push([this.vLine(x, y)])
             }
         }
         for(let y=1;y<this.state.nodesHeigh;y++){
             for(let x=1;x<this.state.nodesWide;x++){
-                linesArray.push([this.Tag(x, y, this)])
+                linesArray.push([this.Tag(x, y)])
             }
         }
         // dummy state change for force a reRender because 
@@ -116,37 +111,52 @@ class CanvasElm extends React.Component{
             ranColor: Konva.Util.getRandomColor(),
         })
         console.log('update', this.state);
+        this.setState({
+            ranColor: Konva.Util.getRandomColor(),
+        })
+    }
+
+    Dot(x, y){
+        return(
+            <Circle
+                x={(x*this.state.rcLen)+((this.state.width/2)-(this.state.rcLen*this.state.nodesWide)*.7)} y={(y*this.state.rcLen)+(this.state.r*2)} radius={this.state.r}
+                fill='#333'
+                shadowBlur='5'
+            />
+        );
     }
     
-    hLine(x, y, game){
+    hLine(x, y){
         let a = x+((y-1)*this.state.nodesWide),b = (x+1)+((y-1)*this.state.nodesWide)
         return (
             <Rect
-                x={(x*100)} y={(y*100)-10} width={this.state.rcLen} height={this.state.rcWide}
+                x={(x*this.state.rcLen)+((this.state.width/2)-(this.state.rcLen*this.state.nodesWide)*.7)} y={(y*this.state.rcLen)-(this.state.rcWide/2)+(this.state.r*2)} width={this.state.rcLen} height={this.state.rcWide}
                 fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
                 onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+                onTap={()=>{return this.handleClick(a+'_'+b, a, b);}}
             />
         );
     }
-    vLine(x, y, game){
+    vLine(x, y){
         let a = x+((y-1)*this.state.nodesWide),b = (x+this.state.nodesWide)+((y-1)*this.state.nodesWide);
         return(
             <Rect
-                x={(x*100)-10} y={(y*100)} width={this.state.rcWide} height={this.state.rcLen}
+                x={(x*this.state.rcLen)-(this.state.rcWide/2)+((this.state.width/2)-(this.state.rcLen*this.state.nodesWide)*.7)} y={(y*this.state.rcLen)+(this.state.r*2)} width={this.state.rcWide} height={this.state.rcLen}
                 fill={this.state['color'+a+'_'+b]}
                 shadowBlur={10}
                 onClick={()=>{return this.handleClick(a+'_'+b, a, b);}}
+                onTap={()=>{return this.handleClick(a+'_'+b, a, b);}}
             />
         );
     }
-    Tag(x, y, game){
+    Tag(x, y){
         let a = x+((y-1)*this.state.nodesWide),b = x+((y-1)*this.state.nodesWide);
         return(
             <Text 
-                x={(x*100)+15} y={(y*100)+25}
+                x={(x*this.state.rcLen)+(this.state.rcLen*.15)+((this.state.width/2)-(this.state.rcLen*this.state.nodesWide)*.7)} y={(y*this.state.rcLen)+(this.state.rcLen*.25)+(this.state.r*2)}
                 text={this.state['Tag'+a+'_'+(b+1+this.state.nodesWide)]}
-                fontSize={50}
+                fontSize={this.state.r/.42}
             />
         )
     }
@@ -242,7 +252,7 @@ class CanvasElm extends React.Component{
             }
             // setTimeout(()=>{
             //     window.location.href = '/Game/' + parseInt(this.props.match.params.x,(3,10)) +'/'+ parseInt(this.props.match.params.y,(3,10));
-            // }, 4000);
+            // }, 7000);
             
         }
 
@@ -348,55 +358,61 @@ class CanvasElm extends React.Component{
         return(
             <div className='frame' id="frame" >
                 <Popup />
-                <Stage width={115*this.state.nodesWide+50} height={115*this.state.nodesHeigh+25}>
+                <Stage width={this.state.width} height={this.state.height}>
                     <Layer ref='layer' className="dots-inBoxes">
                         <Text 
-                            x={105*this.state.nodesWide*.33} y={115*this.state.nodesHeigh}
+                            x={this.state.width*.20} y={this.state.height*.7}
                             text={"Turn: " + this.state['P'+this.state.turn+'Tag'][0]}
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                         />
                         <Text 
-                            x={(105*this.state.nodesWide*.66)-15} y={115*this.state.nodesHeigh}
+                            x={(this.state.width*.66)-(this.state.r/.25)} y={this.state.height*.7}
                             text={this.state.nodesWide}
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                             onClick={()=>{this.changeSizeWide(this)}}
+                            onTap={()=>{this.changeSizeWide(this)}}
                         />
                         <Text 
-                            x={105*this.state.nodesWide*.66} y={115*this.state.nodesHeigh}
+                            x={this.state.width*.66} y={this.state.height*.7}
                             text={'X'}
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                         />
                         <Text 
-                            x={(105*this.state.nodesWide*.66)+16} y={115*this.state.nodesHeigh}
+                            x={(this.state.width*.66)+(this.state.r/.25)} y={this.state.height*.7}
                             text={this.state.nodesHeigh}
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                             onClick={()=>{this.changeSizeHigh(this)}}
+                            onTap={()=>{this.changeSizeWide(this)}}
                         />
                         <Rect
-                            x={50*this.state.nodesWide/2} y={10} width={100} height={50}
+                            x={this.state.width*.33} y={this.state.r} width={this.state.rcLen} height={this.state.r/.25}
                             fill={this.state.p1color}
                             shadowBlur={10}
                             onClick={()=>{this.getNewPlayerColor(1)}}
+                            onTap={()=>{this.getNewPlayerColor(1)}}
                         />
                         <Text 
-                            x={36*this.state.nodesWide/2} y={25}
+                            x={(this.state.width*.33)-(this.state.rcLen+this.state.r*2)} y={this.state.r}
                             text={this.state.P1Tag[0]}
                             id="P1Tag"
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                             onClick={()=>{this.changeTag(1, this)}}
+                            onTap={()=>{this.changeTag(1, this)}}
                         />
                         <Rect
-                            x={160*this.state.nodesWide/2} y={10} width={100} height={50}
+                            x={(this.state.width*.66)} y={this.state.r} width={this.state.rcLen} height={this.state.r/.25}
                             fill={this.state.p2color}
                             shadowBlur={10}
                             onClick={()=>{this.getNewPlayerColor(2)}}
+                            onTap={()=>{this.getNewPlayerColor(2)}}
                         />
                         <Text 
-                            x={146*this.state.nodesWide/2} y={25}
+                            x={(this.state.width*.66)-(this.state.rcLen+this.state.r*2)} y={this.state.r}
                             text={this.state.P2Tag[0]}
                             id="P2Tag"
-                            fontSize={20}
+                            fontSize={this.state.r/.25}
                             onClick={()=>{this.changeTag(2, this)}}
+                            onTap={()=>{this.changeTag(2, this)}}
                         />
                         <Group ref=''>
                             {gameArray}
